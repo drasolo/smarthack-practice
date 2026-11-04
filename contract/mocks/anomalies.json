@@ -1,0 +1,51 @@
+{
+  "items": [
+    {
+      "rank": 1,
+      "meter_id": "M0032",
+      "score": 0.74,
+      "kind": "sudden_drop",
+      "period": {"start": "2026-04-15", "end": "2026-04-28"},
+      "evidence": {
+        "baseline_kwh_day": 9.6,
+        "recent_kwh_day": 2.3,
+        "change_pct": -75.9,
+        "zero_days": 0,
+        "max_kwh_interval": 0.62,
+        "spike_ratio": 1.9
+      }
+    },
+    {
+      "rank": 2,
+      "meter_id": "M0014",
+      "score": 1.0,
+      "kind": "flatline_zero",
+      "period": {"start": "2026-03-31", "end": "2026-04-06"},
+      "evidence": {
+        "baseline_kwh_day": 9.4,
+        "recent_kwh_day": 9.1,
+        "change_pct": -3.2,
+        "zero_days": 7,
+        "max_kwh_interval": 0.48,
+        "spike_ratio": 1.7
+      }
+    },
+    {
+      "rank": 3,
+      "meter_id": "M0015",
+      "score": 0.9,
+      "kind": "spike",
+      "period": {"start": "2026-04-23", "end": "2026-04-23"},
+      "evidence": {
+        "baseline_kwh_day": 8.7,
+        "recent_kwh_day": 9.0,
+        "change_pct": 3.4,
+        "zero_days": 0,
+        "max_kwh_interval": 4.9,
+        "spike_ratio": 13.2
+      }
+    }
+  ],
+  "source": "mock",
+  "generated_at": "2026-11-04T12:00:00Z"
+}

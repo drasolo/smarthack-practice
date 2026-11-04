@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(~/smarthack-data/raw/**)",
+      "Read(./.env)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --quiet ruff format --quiet ."
+          }
+        ]
+      }
+    ]
+  }
+}

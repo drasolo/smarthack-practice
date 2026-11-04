@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+.env.local
+.claude/settings.local.json
+# Real data never enters the repo; it lives in DATA_DIR.
+data/raw/
+data/processed/
+evals/results/screens/
+node_modules/

@@ -1,0 +1,9 @@
+{
+  "preservePatterns": [".env", ".env.local"],
+  "scripts": {
+    "prepare": "uv sync",
+    "setup": "",
+    "run": "uv run dev.py run",
+    "teardown": ""
+  }
+}

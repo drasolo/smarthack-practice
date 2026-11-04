@@ -1,0 +1,13 @@
+{
+  "meter_id": "M0032",
+  "explanation": {
+    "summary": "Consumul zilnic a scăzut de la 9.6 kWh la 2.3 kWh (-75.9%) în ultimele 14 zile.",
+    "reasons": [
+      "Scădere bruscă și susținută, fără zile lipsă.",
+      "Profilul orar a rămas același, doar nivelul a scăzut."
+    ],
+    "next_step": "Verificare la fața locului: sigiliu, conexiuni, posibil bypass.",
+    "confidence": "medium"
+  },
+  "model": "fake"
+}

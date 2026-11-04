@@ -1,0 +1,38 @@
+[project]
+name = "smarthack-practice"
+version = "0.1.0"
+description = "SmartHack 2026 practice repo: smart-meter anomalies explained by an LLM"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "anthropic",
+  "duckdb",
+  "fastapi",
+  "httpx",
+  # 4.7.0 segfaults on fit with the Anaconda numpy on Dragoș's laptop; 4.6.0 works.
+  "lightgbm==4.6.0",
+  "numpy",
+  "pandas",
+  "pyarrow",
+  "pydantic",
+  "python-dotenv",
+  "scikit-learn",
+  "streamlit",
+  "uvicorn",
+]
+
+[dependency-groups]
+dev = ["pytest", "ruff"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
