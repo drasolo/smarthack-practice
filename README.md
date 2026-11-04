@@ -10,8 +10,9 @@ AGENTS.md; this page is for the three of us.
    macOS: `curl -LsSf https://astral.sh/uv/install.sh | sh`.
 2. Clone the repo and run `uv run dev.py smoke`. The first run installs everything. It must end
    with `SMOKE OK`.
-3. Copy `.env.example` to `.env`. Only the laptop that runs the real LLM needs
-   `ANTHROPIC_API_KEY`; without it everything runs on the offline `fake` provider.
+3. Copy `.env.example` to `.env`. Nobody needs an API key. Set `LLM_PROVIDER=claude` and the
+   app's explanations come from Claude on your own Claude login (`claude auth login`). Leave it
+   empty and they come from the templates in `api/explain.py`.
 4. Open the repo in your agent and ask "which repo is this?". The answer must be
    "smarthack-practice, AGENTS.md loaded".
    - Codex and Antigravity read `AGENTS.md` and `.agents/skills/` on their own.
@@ -56,7 +57,7 @@ the others are without asking.
 | --- | --- |
 | 0:00 | Each person asks their agent the check question. Everyone reads CONTEXT.md > Brief. |
 | 0:10 | Agree on the contract. It already exists: change it now or not at all. |
-| 0:20 | data: profile London, write the loader, inject labelled anomalies. ui: UI on mocks (`USE_MOCKS=1`). backend: explanation prompt on the real LLM, three Emdash tasks in parallel. |
+| 0:20 | data: profile London, write the loader, inject labelled anomalies. ui: UI on mocks (`USE_MOCKS=1`). backend: API on London data and sharper template explanations, three Emdash tasks in parallel. |
 | 1:15 | First merge into `main`. Everyone pulls and runs smoke. |
 | 1:45 | Eval table on London data. |
 | 2:10 | Three-minute demo and three jury questions (`pitch-qa`). |

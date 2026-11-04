@@ -1,8 +1,10 @@
 """Ask an LLM for structured output, with PII masking and a call log.
 
-Providers: "anthropic" (Claude through the official SDK) and "fake" (offline and deterministic,
-used by tests and smoke). Pick one with LLM_PROVIDER. Another provider is one more function with
-the same signature as `_anthropic`.
+Providers, picked with LLM_PROVIDER:
+- "claude": your own Claude plan through the Claude Code CLI, no API key (`common/claude_cli.py`).
+- "anthropic": an API key, through the official SDK. Switch to this when the project is handed off.
+- "fake": offline and deterministic, used by tests and smoke.
+Another provider is one more function with the same signature as `_anthropic`.
 """
 
 from __future__ import annotations
@@ -14,7 +16,7 @@ from datetime import UTC, datetime
 
 from pydantic import BaseModel
 
-from common import config
+from common import claude_cli, config
 from common.pii import mask
 
 # Models that accept the server-side refusal fallback (fallbacks="default").
@@ -26,7 +28,11 @@ class LLMRefused(RuntimeError):
 
 
 def provider_name() -> str:
-    return "fake" if config.LLM_PROVIDER == "fake" else config.LLM_MODEL
+    if config.LLM_PROVIDER == "fake":
+        return "fake"
+    if config.LLM_PROVIDER == "claude":
+        return f"{config.LLM_MODEL} (Claude plan)"
+    return config.LLM_MODEL
 
 
 def ask[T: BaseModel](schema: type[T], system: str, user: str, *, fake: Callable[[], T]) -> T:
@@ -35,12 +41,25 @@ def ask[T: BaseModel](schema: type[T], system: str, user: str, *, fake: Callable
     started = time.perf_counter()
     if config.LLM_PROVIDER == "fake":
         result = fake()
+    elif config.LLM_PROVIDER == "claude":
+        result = _claude(schema, system, user)
     elif config.LLM_PROVIDER == "anthropic":
         result = _anthropic(schema, system, user)
     else:
         raise RuntimeError(f"unknown LLM_PROVIDER {config.LLM_PROVIDER!r}")
     _log(system, user, result, time.perf_counter() - started)
     return result
+
+
+def _claude[T: BaseModel](schema: type[T], system: str, user: str) -> T:
+    data = claude_cli.ask_json(
+        schema.model_json_schema(),
+        system,
+        user,
+        model=config.LLM_MODEL,
+        effort=config.LLM_EFFORT,
+    )
+    return schema.model_validate(data)
 
 
 def _anthropic[T: BaseModel](schema: type[T], system: str, user: str) -> T:

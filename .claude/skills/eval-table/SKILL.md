@@ -11,7 +11,8 @@ description: Build or refresh the evaluation table the pitch shows. Use after a 
 3. Real data has no labels: inject labelled anomalies into a copy of it (scale a meter's
    consumption down, zero a week, add a spike), save the labels as
    `DATA_DIR/processed/labels.csv`, and measure on that.
-4. Keep the four LLM checks: valid schema, numbers grounded in the evidence, no PII, language.
-   Run once with a real model (`LLM_PROVIDER=anthropic`) before the pitch, not only `fake`.
+4. Keep the four explanation checks: valid schema, numbers grounded in the evidence, no PII,
+   language. They run on the templates. Only if the organizers hand out API access, run them
+   once more with `LLM_PROVIDER=anthropic`.
 5. Copy the final table into `pitch/outline.md` under Evaluation, with one sentence on what it
    means in lei, hours or inspector visits.

@@ -59,3 +59,5 @@ One line each, newest last: date, decision, why.
 - 2026-11-04: real data outside the repo in `DATA_DIR`, so every Emdash worktree shares it and
   agents can't read raw rows by accident.
 - 2026-11-04: offline `fake` LLM provider by default, so smoke and evals run without a key.
+- 2026-11-04: `claude` LLM provider: the app calls Claude through each person's own Claude
+  Code login, so real explanations need no API key. A handoff switches to `anthropic` and a key.
