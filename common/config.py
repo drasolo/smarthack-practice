@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import zlib
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -18,11 +19,19 @@ SAMPLE_DIR = ROOT / "data" / "sample"
 MOCKS_DIR = ROOT / "contract" / "mocks"
 RESULTS_DIR = ROOT / "evals" / "results"
 
-# Emdash gives each task its own block of ports in EMDASH_PORT, so parallel worktrees don't
-# collide. Outside Emdash the usual defaults apply.
-_BASE = int(os.getenv("EMDASH_PORT") or 0)
-API_PORT = int(os.getenv("API_PORT") or (_BASE or 8000))
-UI_PORT = int(os.getenv("UI_PORT") or (_BASE + 1 if _BASE else 8501))
+
+def port_block(root: Path) -> int:
+    """A stable block of 10 ports for one checkout, so parallel worktrees never collide.
+
+    40000 to 49990, below the 50000+ blocks Emdash hands out.
+    """
+    return 40000 + zlib.crc32(str(root.resolve()).lower().encode("utf-8")) % 1000 * 10
+
+
+# Emdash sets EMDASH_PORT per task. Elsewhere each checkout gets its own block from its path.
+PORT_BASE = int(os.getenv("EMDASH_PORT") or 0) or port_block(ROOT)
+API_PORT = int(os.getenv("API_PORT") or PORT_BASE)
+UI_PORT = int(os.getenv("UI_PORT") or PORT_BASE + 1)
 API_URL = os.getenv("API_URL") or f"http://127.0.0.1:{API_PORT}"
 
 USE_MOCKS = os.getenv("USE_MOCKS", "").lower() in {"1", "true", "yes"}

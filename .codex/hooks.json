@@ -1,0 +1,27 @@
+{
+  "description": "smarthack board: show new posts at session start and on each prompt",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --quiet dev.py board unread --hook codex --event start",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run --quiet dev.py board unread --hook codex --event prompt",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
+}
