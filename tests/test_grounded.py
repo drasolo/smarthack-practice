@@ -99,6 +99,20 @@ def test_numeric_meter_id_does_not_erase_evidence():
 
 
 @pytest.mark.parametrize(
+    ("meter_id", "text", "ok"),
+    [
+        ("42", "Contorul 42 a raportat zero consum timp de 7 zile.", True),
+        ("7", "Contorul 7 a raportat zero consum.", False),  # the ID is not the duration
+        ("42", "Contorul #42 a raportat zero consum timp de 7 zile.", True),
+        ("M42", "Contorul M42- a raportat zero consum timp de 7 zile.", True),
+    ],
+)
+def test_meter_id_mentions(meter_id, text, ok):
+    a = anomaly("flatline_zero").model_copy(update={"meter_id": meter_id})
+    assert grounded(say(text), a) is ok
+
+
+@pytest.mark.parametrize(
     ("kind", "text"),
     [
         ("sudden_drop", "Consumul a scăzut cu 75.9%, la 2.3 kWh pe zi."),
