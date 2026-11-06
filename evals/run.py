@@ -42,7 +42,8 @@ def grounded(explanation: Explanation, anomaly: Anomaly) -> bool:
     allowed = [float(v) for v in evidence.values()]
     allowed += [abs(v) for v in allowed] + [float(K), 14.0]
     text = " ".join([explanation.summary, *explanation.reasons, explanation.next_step])
-    text = text.replace(anomaly.meter_id, " ")  # the ID's digits are not a claim
+    if not anomaly.meter_id.isdigit():  # the ID's digits are not a claim; an all-digit ID could
+        text = re.sub(rf"\b{re.escape(anomaly.meter_id)}\b", " ", text)  # be an evidence number
     numbers = [float(n.replace(",", ".")) for n in _NUMBER.findall(_DATE.sub(" ", text))]
     if not all(_close(n, allowed) for n in numbers):
         return False

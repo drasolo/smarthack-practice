@@ -93,6 +93,11 @@ def test_bad_explanations_are_caught(kind, text):
     assert not grounded(say(text), anomaly(kind))
 
 
+def test_numeric_meter_id_does_not_erase_evidence():
+    a = anomaly("flatline_zero").model_copy(update={"meter_id": "7"})  # zero_days is also 7
+    assert grounded(_template(a), a)
+
+
 @pytest.mark.parametrize(
     ("kind", "text"),
     [
