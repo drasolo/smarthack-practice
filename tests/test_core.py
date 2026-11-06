@@ -89,3 +89,19 @@ def test_api_follows_contract():
     schema.Series.model_validate(client.get(f"/meters/{meter}/series").json())
     schema.ExplainResponse.model_validate(client.post("/explain", json={"meter_id": meter}).json())
     assert client.post("/explain", json={"meter_id": "nope"}).status_code == 404
+
+
+def test_grounded_ignores_meter_ids(sample):
+    from evals.run import grounded
+
+    items = detect.to_contract(detect.score(sample), 10, "sample").items
+    a = next(i for i in items if i.meter_id == "M0024")
+    text = f"Contorul M0024 a raportat zero {a.evidence.zero_days} zile la rând."
+    e = schema.Explanation(summary=text, reasons=["x"], next_step="Vizită.", confidence="high")
+    assert grounded(e, a)
+
+
+def test_flatline_evidence_describes_its_period(sample):
+    row = detect.score(sample).set_index("meter_id").loc["M0014"]
+    assert row["kind"] == "flatline_zero"
+    assert row["recent_kwh_day"] == 0 and row["change_pct"] == -100 and row["baseline_kwh_day"] > 0
