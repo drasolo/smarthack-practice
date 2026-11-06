@@ -1,4 +1,4 @@
-# Evaluation (2026-11-06 20:37, data: sample)
+# Evaluation (2026-11-06 20:55, data: sample)
 
 ## Detection
 
@@ -8,10 +8,24 @@ Labelled anomalies: 29 of 120 meters.
 | --- | --- | --- | --- |
 | baseline scorer (ml/detect.py) | 0.70 | 0.24 | 0.64 |
 | naive: biggest drop first | 0.30 | 0.10 | 0.48 |
+| learned (ml/learned.py) | 0.90 | 0.31 | 0.80 |
 
 ## Explanations
 
-LLM: claude-opus-5-5 (Claude plan), top 5 meters.
+### Baseline
+
+LLM: fake, top 5 meters.
+
+| check | passed |
+| --- | --- |
+| valid schema | 5/5 |
+| numbers grounded in evidence | 5/5 |
+| no PII in output | 5/5 |
+| written in Romanian | 5/5 |
+
+### Learned
+
+LLM: fake, top 5 meters.
 
 | check | passed |
 | --- | --- |

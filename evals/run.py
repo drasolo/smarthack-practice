@@ -14,7 +14,7 @@ from api.explain import explain_anomaly
 from common import config, llm, pii
 from contract.schema import Anomaly, Explanation
 from evals.metrics import average_precision, precision_at_k, recall_at_k
-from ml import detect
+from ml import detect, learned
 from ml.load import load_default, load_labels
 
 K = 10
@@ -37,7 +37,7 @@ def grounded(explanation: Explanation, anomaly: Anomaly) -> bool:
     return True
 
 
-def detection_rows(scores, labels) -> list[str]:
+def detection_rows(scores, labels, learned_scores) -> list[str]:
     if labels is None:
         return ["No labels for this data, so no detection metrics. Inject labelled anomalies."]
     relevant = set(labels["meter_id"])
@@ -54,6 +54,7 @@ def detection_rows(scores, labels) -> list[str]:
         "| --- | --- | --- | --- |",
         row("baseline scorer (ml/detect.py)", ours),
         row("naive: biggest drop first", naive),
+        row("learned (ml/learned.py)", list(learned_scores["meter_id"])),
     ]
 
 
@@ -84,6 +85,7 @@ def explanation_rows(scores) -> list[str]:
 def build() -> str:
     readings, source = load_default()
     scores = detect.score(readings)
+    learned_scores = learned.score(readings)
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
     return "\n".join(
         [
@@ -91,11 +93,17 @@ def build() -> str:
             "",
             "## Detection",
             "",
-            *detection_rows(scores, load_labels(source)),
+            *detection_rows(scores, load_labels(source), learned_scores),
             "",
             "## Explanations",
             "",
+            "### Baseline",
+            "",
             *explanation_rows(scores),
+            "",
+            "### Learned",
+            "",
+            *explanation_rows(learned_scores),
             "",
         ]
     )
