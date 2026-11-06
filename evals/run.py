@@ -46,6 +46,8 @@ def grounded(explanation: Explanation, anomaly: Anomaly) -> bool:
     # so it is dropped only right after "contor", "contorul" or "ID".
     meter = rf"(?<!\w){re.escape(anomaly.meter_id)}(?!\w)"
     if anomaly.meter_id.isdigit():
+        # shortcut: an all-digit ID right after contor/ID is treated as the ID, so a quantity written
+        # there is not checked; revisit if real data has all-digit IDs.
         meter = rf"(?i)\b(?:contorul|contor|id)\b\W{{0,3}}{meter}"
     text = re.sub(meter, " ", text)
     numbers = [float(n.replace(",", ".")) for n in _NUMBER.findall(_DATE.sub(" ", text))]
