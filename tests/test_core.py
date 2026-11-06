@@ -52,8 +52,17 @@ def test_mocks_match_contract(name):
 
 def test_detector_ranks_labelled_meters_on_top(sample):
     labels = load_labels("sample")
-    top = set(detect.score(sample).head(10)["meter_id"])
-    assert set(labels["meter_id"]) <= top
+    easy = set(labels.loc[labels["meter_id"] <= "M0040", "meter_id"])  # the original 40 meters
+    assert easy <= set(detect.score(sample).head(10)["meter_id"])
+
+
+def test_sample_stays_hard_for_the_baseline(sample):
+    """The harder meters exist so a real model has room to win: the baseline must miss some."""
+    labels = set(load_labels("sample")["meter_id"])
+    top = list(detect.score(sample).head(len(labels))["meter_id"])
+    assert sum(m not in labels for m in top) >= 5, (
+        "fewer false alarms than the sample was built for"
+    )
 
 
 def test_missing_day_is_not_a_zero_day(sample):
