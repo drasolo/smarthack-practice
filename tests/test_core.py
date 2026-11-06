@@ -99,9 +99,19 @@ def test_grounded_ignores_meter_ids(sample):
     text = f"Contorul M0024 a raportat zero {a.evidence.zero_days} zile la rând."
     e = schema.Explanation(summary=text, reasons=["x"], next_step="Vizită.", confidence="high")
     assert grounded(e, a)
+    e.summary = f"Contorul M0024 a consumat de x9999 ori mai mult, {a.evidence.zero_days} zile."
+    assert not grounded(e, a)
 
 
 def test_flatline_evidence_describes_its_period(sample):
     row = detect.score(sample).set_index("meter_id").loc["M0014"]
     assert row["kind"] == "flatline_zero"
     assert row["recent_kwh_day"] == 0 and row["change_pct"] == -100 and row["baseline_kwh_day"] > 0
+
+
+def test_meter_at_zero_all_period_has_numeric_evidence():
+    ts = pd.date_range("2026-01-01", periods=30 * 24, freq="h", tz="UTC")
+    readings = pd.DataFrame({"meter_id": "Z", "ts": ts, "kwh": 0.0})
+    row = detect.score(readings).iloc[0]
+    assert row["baseline_kwh_day"] == 0 and row["recent_kwh_day"] == 0 and row["change_pct"] == 0
+    detect.to_anomaly(row)  # validates against the contract

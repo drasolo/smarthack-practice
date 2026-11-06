@@ -79,9 +79,10 @@ def score(readings: pd.DataFrame, recent_days: int = RECENT_DAYS) -> pd.DataFram
         # baseline". Other kinds keep the recent window (a spike day's total would contradict
         # the spike explanation, which says daily use stays normal).
         inside = g["day"].between(start, end) if kind == "flatline_zero" else g["day"] >= cutoff
-        base_e = g.loc[~inside, "kwh"].median()
-        during = g.loc[inside, "kwh"].median()
-        change_e = (during - base_e) / base_e * 100 if base_e and base_e > 0 else 0.0
+        # An empty side (a meter at zero for the whole period) has a NaN median; report it as 0.
+        base_e = np.nan_to_num(g.loc[~inside, "kwh"].median())
+        during = np.nan_to_num(g.loc[inside, "kwh"].median())
+        change_e = (during - base_e) / base_e * 100 if base_e > 0 else 0.0
         rows.append(
             {
                 "meter_id": meter_id,
@@ -89,8 +90,8 @@ def score(readings: pd.DataFrame, recent_days: int = RECENT_DAYS) -> pd.DataFram
                 "kind": kind,
                 "start": start,
                 "end": end,
-                "baseline_kwh_day": round(float(base_e or 0), 1),
-                "recent_kwh_day": round(float(during or 0), 1),
+                "baseline_kwh_day": round(float(base_e), 1),
+                "recent_kwh_day": round(float(during), 1),
                 "change_pct": round(float(change_e), 1),
                 "drop_14d_pct": round(float(change), 1),  # naive ranking in evals, not evidence
                 "zero_days": int(zero_days),
