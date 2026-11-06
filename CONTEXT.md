@@ -1,7 +1,7 @@
 # Context
 
 The facts every agent needs and nobody should have to re-explain. Owned by everyone: change a
-section only after telling the group.
+section only after posting to `@all` on the board.
 
 ## Brief
 
@@ -61,3 +61,9 @@ One line each, newest last: date, decision, why.
 - 2026-11-04: offline `fake` LLM provider by default, so smoke and evals run without a key.
 - 2026-11-04: `claude` LLM provider: the app calls Claude through each person's own Claude
   Code login, so real explanations need no API key. A handoff switches to `anthropic` and a key.
+- 2026-11-04: roles own folders and agents don't belong to roles. Each of us has a different mix
+  of Claude Code, Codex and Antigravity, and some run several at once.
+- 2026-11-04: the board (issue #1) replaces `team/*.md` for claims, done posts and asks. Files
+  only reached the others after a merge; the board is live.
+- 2026-11-04: a different agent from the author reviews every branch before Dragoș merges it.
+  Different models miss different things.

@@ -12,7 +12,7 @@ description: Build or refresh the evaluation table the pitch shows. Use after a 
    consumption down, zero a week, add a spike), save the labels as
    `DATA_DIR/processed/labels.csv`, and measure on that.
 4. Keep the four explanation checks: valid schema, numbers grounded in the evidence, no PII,
-   language. They run on the templates. Only if the organizers hand out API access, run them
-   once more with `LLM_PROVIDER=anthropic`.
+   language. Smoke runs them on the templates. Before the pitch, run them once more on a real
+   login with `LLM_PROVIDER=claude`.
 5. Copy the final table into `pitch/outline.md` under Evaluation, with one sentence on what it
    means in lei, hours or inspector visits.

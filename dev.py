@@ -1,7 +1,8 @@
 """Team entry point: `uv run dev.py <command>`. Works the same on Windows and macOS.
 
-run           API and UI on this task's ports (Emdash sets EMDASH_PORT per task)
+run           API and UI on this checkout's own ports (Emdash's EMDASH_PORT when set)
 smoke         the one check: lint, tests, API and UI boot, eval table
+board ...     the agent board on GitHub (`dev.py board -h`)
 eval          write evals/results/latest.md
 profile PATH  short profile of a dataset (see scripts/profile_data.py for flags)
 synth         regenerate data/sample/
@@ -12,6 +13,7 @@ sync-skills   copy .agents/skills to .claude/skills
 from __future__ import annotations
 
 import os
+import socket
 import subprocess
 import sys
 import time
@@ -41,6 +43,33 @@ def start_ui(port: int, api_port: int) -> subprocess.Popen:
     return subprocess.Popen(args, cwd=config.ROOT, env=env)
 
 
+def _free(port: int) -> bool:
+    with socket.socket() as s:
+        if os.name != "nt":
+            # As uvicorn does: a port in TIME_WAIT from the last run or smoke is free. Not on
+            # Windows, where SO_REUSEADDR would let us bind a port that's really in use.
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            s.bind(("127.0.0.1", port))
+        except OSError:
+            return False
+    return True
+
+
+def ports(offset: int = 0) -> tuple[int, int]:
+    """API and UI ports at `offset` in this checkout's block, moving to the next free block.
+
+    Explicit EMDASH_PORT or API_PORT/UI_PORT are used as they are.
+    """
+    if os.getenv("EMDASH_PORT") or os.getenv("API_PORT") or os.getenv("UI_PORT"):
+        return config.API_PORT + offset, config.UI_PORT + offset
+    for i in range(20):
+        base = config.PORT_BASE + offset + 10 * i
+        if _free(base) and _free(base + 1):
+            return base, base + 1
+    return config.API_PORT + offset, config.UI_PORT + offset
+
+
 def wait_for(url: str, seconds: int = 90) -> bool:
     deadline = time.time() + seconds
     while time.time() < deadline:
@@ -64,8 +93,9 @@ def stop(*procs: subprocess.Popen) -> None:
 
 
 def run() -> None:
-    api, ui = start_api(config.API_PORT), start_ui(config.UI_PORT, config.API_PORT)
-    print(f"API http://127.0.0.1:{config.API_PORT}/docs · UI http://127.0.0.1:{config.UI_PORT}")
+    api_port, ui_port = ports()
+    api, ui = start_api(api_port), start_ui(ui_port, api_port)
+    print(f"API http://127.0.0.1:{api_port}/docs · UI http://127.0.0.1:{ui_port}")
     try:
         ui.wait()
     except KeyboardInterrupt:
@@ -86,8 +116,8 @@ def smoke() -> int:
     step("ruff", subprocess.call([PY, "-m", "ruff", "check", "."], cwd=config.ROOT) == 0)
     step("pytest", subprocess.call([PY, "-m", "pytest"], cwd=config.ROOT) == 0)
 
-    # Ports +5/+6 so smoke runs next to a `dev.py run` in the same task.
-    api_port, ui_port = config.API_PORT + 5, config.UI_PORT + 5
+    # Ports +5/+6 so smoke runs next to a `dev.py run` in the same checkout.
+    api_port, ui_port = ports(offset=5)
     api, ui = start_api(api_port), start_ui(ui_port, api_port)
     base = f"http://127.0.0.1:{api_port}"
     try:
@@ -116,7 +146,14 @@ def smoke() -> int:
         step("eval table", False, repr(error))
 
     failed = [name for name, ok, _ in results if not ok]
-    print("SMOKE OK" if not failed else f"SMOKE FAILED: {', '.join(failed)}")
+    result = "SMOKE OK" if not failed else f"SMOKE FAILED: {', '.join(failed)}"
+    try:  # so `board done` can quote it
+        from common import board
+
+        board.record_smoke(result)
+    except Exception:  # noqa: BLE001
+        pass
+    print(result)
     return 1 if failed else 0
 
 
@@ -132,6 +169,10 @@ def main() -> int:
         run()
     elif command == "smoke":
         return smoke()
+    elif command == "board":
+        from common import board
+
+        return board.main(rest)
     elif command == "eval":
         from evals import run as evals
 
