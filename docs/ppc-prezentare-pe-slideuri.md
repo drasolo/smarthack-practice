@@ -15,7 +15,7 @@ rămână privat. Vezi [intrebari-deschise.md](intrebari-deschise.md).
 | 2-5 | Cine este PPC, lanțul energiei, cifre, rețeaua | [ppc-companie-si-date.md](ppc-companie-si-date.md) |
 | 6 | Platforma de date și ce urmează | [ppc-companie-si-date.md](ppc-companie-si-date.md) |
 | 7-9 | Cele nouă proiecte AI | [ppc-proiecte-ai.md](ppc-proiecte-ai.md) |
-| 10 | Deschiderea părții despre AI: capabilități, riscuri, guvernanță | Doar aici |
+| 10 | Deschiderea părții despre AI: capabilități, riscuri, guvernanță. Aliniată la NIST AI RMF 1.0, NIST GenAI Profile, EU AI Act și ghidurile EDPS | Doar aici |
 | 11 | Evoluția AI: AI simbolic, deep learning (2012), Transformers (2017), ChatGPT (2022), guvernanță (2024+) | Doar aici |
 | 12 | AI simbolic: reguli explicite, transparent, dar fragil la scară | Doar aici |
 | 13 | ML clasic: regresie, clasificare, clustering, pipeline de antrenare. Exemplu de prognoză de consum cu vreme, sărbători, program de lucru și sezonalitate | Doar aici |
