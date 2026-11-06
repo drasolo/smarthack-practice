@@ -51,24 +51,7 @@ The data role also runs `uv run dev.py fetch london` the evening before (about 8
 - Folder ownership keeps conflicts rare. Changes to `contract/` or CONTEXT.md get posted to
   `@all` on the board first.
 
-## Emdash (optional, Dragoș's laptop)
 
-Nothing in the repo needs Emdash.
-
-- Add the `practice` folder as a project through the folder picker. `.emdash.json` makes every
-  task copy `.env`, run `uv sync`, and start the app on that task's own ports. A task can run
-  Claude Code, Codex or Antigravity.
-- One Emdash task per slice. The Work view (Ctrl+I) shows the SmartHack plans and issues, and
-  Ctrl+Shift+U jumps to the next agent waiting for an answer.
-- In the project settings, set the worktree directory to
-  `C:\Users\drago\Documents\uni\smarthack_ppc_26\worktrees`. Worktrees then sit inside the
-  SmartHack folder, so conversations in them land on the SmartHack project in the Work view.
-
-## Dry run (Thursday, 2.5 hours)
-
-The run also tests how we work. Three checks: each of us uses two agents if we have them, at
-least one handoff goes between two people through the board, and every merge gets a review from
-a different agent.
 
 | time | what |
 | --- | --- |
@@ -81,8 +64,3 @@ a different agent.
 | 2:10 | Three-minute demo and three jury questions (`pitch-qa`). |
 | 2:20 | Retro, ten minutes: keep, change, drop, and did the board hooks fire in every agent? One line each under CONTEXT.md > Decisions. |
 
-## After the dry run
-
-The event repo is made from this one, with the retro applied. It keeps everything except the
-practice brief and the practice-only code. The SmartHack rules say nothing about code written
-before the event, so ask the organizers whether a prepared skeleton is fine before Saturday.
