@@ -16,7 +16,7 @@ demo waits.
 | Role | Person | GitHub | Folders |
 | --- | --- | --- | --- |
 | backend | Dragoș | `@drasolo` | `api/`, `common/`, `dev.py`; merges into `main` |
-| data | | | `ml/`, `evals/`, `scripts/`, `data/sample/` |
+| data | Teo | `@TeoPana` | `ml/`, `evals/`, `scripts/`, `data/sample/` |
 | ui | | | `ui/`, `pitch/` |
 | everyone | | | `contract/`, `CONTEXT.md`: post to `@all` before changing |
 
