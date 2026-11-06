@@ -9,7 +9,8 @@ Check line: if someone asks "which repo is this?", answer "smarthack-practice, A
 ## What we build
 
 CONTEXT.md > Brief says what. `pitch/demo-script.md` is the spec: a feature that isn't in the
-demo waits.
+demo waits. Background on the event, PPC and our preparation is in `docs/`: start at
+`docs/README.md`, and follow `docs/reguli-pentru-documente.md` when you change anything there.
 
 ## Who owns what
 
