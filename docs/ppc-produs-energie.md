@@ -4,7 +4,8 @@ Ce produse are PPC Energie pentru clienții cu contor inteligent, ce date produc
 cere PPC pe baza lor. Cifrele companiei sunt în [ppc-companie-si-date.md](ppc-companie-si-date.md).
 
 Surse: comunicate PPC Energie, pagina ofertei PPC MaxControl și presă economică, cu URL și dată la
-fiecare fapt. Ultima verificare: 2026-11-06.
+fiecare fapt. Scris de agentul lui Alex și verificat de agentul lui Dragoș. Ultima verificare:
+2026-11-06.
 
 ## Pe scurt
 
@@ -25,13 +26,13 @@ fiecare fapt. Ultima verificare: 2026-11-06.
 | --- | --- | --- | --- | --- |
 | PPC Ore Smart | 11:00-14:59, martie-octombrie | 0,313 / 0,767 lei/kWh (−59%) | 0,89 / 1,44 lei/kWh | [Economedia](https://economedia.ro/ppc-lanseaza-prima-oferta-dinamica-din-romania-prin-care-consumatorii-pot-plati-un-pret-cu-59-mai-mic-daca-consuma-in-momentele-de-varf-ale-productiei-regenerabile.html), 2025-08-06 |
 | PPC Ore Smart+ | Nopțile de luni până vineri 00:00-05:59, tot weekendul, 11:00-14:59 în martie-octombrie | 0,348 / 0,823 lei/kWh | 0,98 / 1,56 lei/kWh | [Știri Craiova](https://stiricraiova.ro/2026/03/19/ppc-energie-lanseaza-o-oferta-cu-tarif-dinamic-ppc-ore-smart-cu-preturi-reduse-la-energie-in-week-end-si-pe-timp-de-noapte/), 2026-03-19; [comunicat PPC](https://www.ppcenergy.ro/wp-content/uploads/Comunicat-de-presa-PPC-Energie-lanseaza-noua-oferta-PPC-Ore-Smart-.pdf) |
-| PPC Ore Smart PRO | Firme cu consum sub 200.000 kWh pe an, cu contor inteligent; intervale ieftine în weekend și în anumite ore din zi | nepublicat în sursă | nepublicat în sursă | [Economedia](https://economedia.ro/?p=370922), 2026-09-10 |
+| PPC Ore Smart PRO | Firme cu consum sub 200.000 kWh pe an și contor inteligent, fără prosumatori. Tot weekendul; în zilele lucrătoare din martie-octombrie, 00:00-05:59 și 11:00-14:59 | nepublicat în sursă | 1,00-1,09 / 1,65-1,73 lei/kWh, după zona de distribuție | [Economedia](https://economedia.ro/?p=370922), 2026-09-10 |
 
 Exemplul PPC pentru Ore Smart+: o gospodărie cu 300 kWh pe lună care mută 75 kWh în intervalele
 ieftine economisește cam 580 lei pe an.
 
-Singura cifră publică despre comportament: în august 2026, aproximativ 22% din clienții Ore Smart+
-și-au redus ponderea consumului între 20:00 și 23:00, față de alte două luni de vară și o lună de
+Singura cifră publică despre comportament, raportată de PPC: în august 2026, aproximativ 22% din
+clienții casnici Ore Smart+ și-au redus ponderea consumului între 20:00 și 23:00, față de alte două luni de vară și o lună de
 iarnă ([Economedia](https://economedia.ro/?p=370922), 2026-09-10). Numărul de clienți pe aceste
 oferte nu e public.
 
@@ -60,12 +61,13 @@ bază pe vreme), iar asta e o problemă bună pentru un hackathon.
 
 | Produs | Ce face | Sursă și dată |
 | --- | --- | --- |
-| PPC MaxControl | Consumul și energia livrată în rețea se plătesc la prețul PZU pe fiecare interval de 15 minute. Soldul se plătește la 30 de zile, nu la 24 de luni. Prețul la injecție nu scade sub 0 lei/kWh, iar consumul nu se facturează peste 0,999 lei/kWh. Raport lunar cu orele scumpe și ieftine și recomandări, notificare săptămânală cu prețuri. Cere contor inteligent și cel mult 200 kW | [ppcenergy.ro](https://www.ppcenergy.ro/prosumatori/clienti-rezidentiali/ppc-maxcontrol/), ofertă valabilă până la 2026-11-30; lansare raportată pe 2026-07-15 de [Știri Craiova](https://stiricraiova.ro/2026/07/15/ppc-energie-lanseaza-ppc-maxcontrol-oferta-pentru-prosumatori-cu-plata-soldului-la-30-de-zile-si-protectie-impotriva-preturilor-negative/) |
+| PPC MaxControl | Consumul și energia livrată în rețea se plătesc la prețul PZU pe fiecare interval de 15 minute, minus componenta TG. Soldul se plătește la 30 de zile, nu la 24 de luni. Prețul la injecție nu scade sub 0 lei/kWh, iar consumul nu se facturează peste 0,999 lei/kWh. Raport lunar cu recomandări și fișier Excel cu consum, injecție și preț la 15 minute, notificare săptămânală cu prețuri. Cere contor inteligent și cel mult 200 kW | [ppcenergy.ro](https://www.ppcenergy.ro/prosumatori/clienti-rezidentiali/ppc-maxcontrol/), ofertă valabilă până la 2026-11-30; lansare raportată pe 2026-07-15 de [Știri Craiova](https://stiricraiova.ro/2026/07/15/ppc-energie-lanseaza-ppc-maxcontrol-oferta-pentru-prosumatori-cu-plata-soldului-la-30-de-zile-si-protectie-impotriva-preturilor-negative/) |
 | Baterii pentru prosumatori | 5, 10 sau 15 kWh, pentru invertoare hibride Huawei și Deye, de la 299 lei pe lună | [The Diplomat](https://www.thediplomat.ro/2026/05/13/ppc-energy-expands-its-portfolio-of-solutions-for-prosumers-with-storage-systems/), 2026-05-13 |
 | PPC Solar Upgrade | Pentru sisteme fără invertor hibrid; de la 599 lei pe lună, cel mult 36 de rate pe factură | Același |
 
-Pagina MaxControl spune că o baterie crește autoconsumul la 55-65%, față de 15-25% fără. Pagina
-are și o eroare: dă media PZU 2025 ca „545,17 lei/kWh”, foarte probabil lei/MWh.
+Pagina MaxControl spune că o baterie crește autoconsumul la 55-65%, față de 15-25% fără. La
+contoarele orare, consumul se împarte egal pe cele patru intervale de 15 minute, deci o curbă la 15
+minute poate fi de fapt orară. Pagina are și o eroare: dă media PZU 2025 ca „545,17 lei/kWh”, foarte probabil lei/MWh.
 
 ## myPPC
 
@@ -79,8 +81,8 @@ Noua versiune a apărut în iulie 2026, pe web și mobil
 - Formular de contact cu tipuri de cerere predefinite.
 - PPC myRewards (reduceri) și PPC myEnergy Coach (recomandări personalizate de eficiență).
 
-Pentru întrebări despre facturi, PPC are deja un agent vocal în producție. Detaliile sunt în
-[ppc-produs-ai-date.md](ppc-produs-ai-date.md) pe branch-ul `docs/research-ai-date`.
+Pentru întrebări despre facturi, PPC are și un agent vocal, descris în
+[ppc-produs-ai-date.md](ppc-produs-ai-date.md).
 
 ## Ce date ar putea da PPC
 

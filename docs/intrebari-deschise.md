@@ -32,6 +32,14 @@ Nu știm dacă aceste întrebări au fost trimise și nici dacă s-a primit vreu
 | Cine ia fiecare rol? | Tabelul din `AGENTS.md` e la zi doar pentru Dragoș pe `main` |
 | Rămâne „motorul de decizie” o rezervă? | Vezi [idei-de-proiect.md](idei-de-proiect.md) |
 
+## Teme încă necercetate
+
+- **PPC Blue:** [Power BOX](https://www.ppcenergy.ro/media/comunicate-de-presa/ppc-prezinta-power-box-prima-sa-solutie-de-incarcare-rapida-din-romania-cu-stocare-inclusa-alimentata-100-cu-energie-verde-direct-dintr-un-parc-fotovoltaic/).
+- **Grupul PPC:** [planul strategic 2026-2030](https://www.ppcgroup.com/media/askdo2e5/ppc-2026-2030-strategic-update_vfi.pdf),
+  [PPC și AWS, centru de date](https://www.forbes.ro/acord-strategic-intre-ppc-si-amazon-pentru-un-mega-centru-de-date-521290),
+  [modelul AI gigafactory](https://economedia.ro/?p=302304),
+  [PPC Grecia pe Azure](https://microsoft.com/en/customers/story/1589540508791095885-ppc-energy-azure-en-greece).
+
 ## Contradicții între surse
 
 | Subiect | Ce spun sursele | Ce facem până se lămurește |

@@ -130,7 +130,8 @@ ReClassAI, modelul care reclasifică sesizările de pe site, este deja descris �
   (2025-02-09), 136.000 km în prezentarea PPC, în Business Forum (2026-04-03) și în comunicatul GIS (2026-04-06). Probabil cifra
   nouă e 136.000.
 - Viteza datelor către furnizori: „în minute” în prezentarea PPC, „zilnic” în comunicatul din martie
-  2025. Ipoteză: s-a trecut la streaming (Kafka) după martie 2025.
+  2025, „near real-time” în [talkul DevTalks](https://www.devtalks.ro/speakers/765-anda-spataru) din
+  iunie 2026. Ipoteză: viteza a crescut după martie 2025.
 
 ## Ce date ar putea da PPC din zona asta
 

@@ -4,16 +4,17 @@ Ce spun sursele publice despre echipele de AI și date ale PPC România, proiect
 concursurile la care PPC a dat probleme. Completează [ppc-proiecte-ai.md](ppc-proiecte-ai.md) și
 [ppc-companie-si-date.md](ppc-companie-si-date.md), care vin din prezentarea PPC.
 
-Surse: anunțuri de angajare, presă și pagini de evenimente, cu URL și dată la fiecare fapt. Ultima
+Surse: anunțuri de angajare, presă și pagini de evenimente, cu URL și dată la fiecare fapt. Scris
+de agentul lui Alex și verificat de agentul lui Dragoș; ce nu s-a putut confirma e marcat. Ultima
 verificare: 2026-11-06.
 
 ## Pe scurt
 
 - Stack-ul din prezentare se confirmă public: anunțurile de ML ale PPC cer AWS (SageMaker, EMR,
   Redshift, S3), Spark, Airflow și MLflow. Nimic despre LLM-uri în anunțuri.
-- PPC are deja în producție doi agenți AI pentru clienți și juriști, făcuți cu startup-uri:
-  un agent vocal pentru facturi (Wonderful) și RecovIA pentru dosarele de recuperare (3X7AI).
-- La singurul hackathon public la care PPC a dat probleme (CleanTech, mai 2025), temele au fost
+- Sursele publice descriu doi agenți AI făcuți cu startup-uri, pentru clienți și juriști: un agent
+  vocal pentru facturi (Wonderful) și RecovIA pentru dosarele de recuperare (3X7AI).
+- La singurul hackathon public găsit cu probleme atribuite și PPC (CleanTech, mai 2025), temele au fost
   congestie, prosumatori, agenți AI, prognoză pe joasă tensiune, digital twin, drone și securitate.
 - Bursele PPC Renewables din 2026 cer prognoză de consum, prognoză de producție, indicatori din
   date brute și simulare de tranzacționare. Asta e cea mai recentă listă de teme scrisă de PPC.
@@ -28,7 +29,7 @@ verificare: 2026-11-06.
 | Platforma unică de date de contorizare pentru RER, prezentată la DevTalks de un BI Developer și un Data Engineer PPC: date din surse eterogene, standardizate în AVRO, validare automată și recuperare a istoricului, citiri aproape în timp real pentru toți furnizorii | [DevTalks 2026](https://www.devtalks.ro/speakers/765-anda-spataru), talk pe 2026-06-03 |
 | PPC mai angajează Data Engineer (1-5 ani) în București | [hipo.ro](https://www.hipo.ro/locuri-de-munca/locuri_de_munca/273559/), dată neafișată în rezultat |
 
-Ipoteză: talkul DevTalks descrie aceeași platformă ca slide-ul 5 din prezentare. Ce aduce nou:
+Ipoteză: talkul DevTalks descrie aceeași platformă ca slide-ul 6 din prezentare. Ce aduce nou:
 datele vin din mai multe surse care nu se potrivesc, iar calitatea se repară automat. Asta susține
 tema „calitatea datelor de contor” (#32 din [teme-posibile-ppc.md](teme-posibile-ppc.md)).
 
@@ -36,8 +37,8 @@ tema „calitatea datelor de contor” (#32 din [teme-posibile-ppc.md](teme-posi
 
 | Proiect | Ce face | Cifre | Sursă și dată |
 | --- | --- | --- | --- |
-| Agent vocal PPC Energie (cu Wonderful) | Răspunde la întrebări despre facturi și modalități de plată, înregistrează dovezi de plată; legat de sistemele de facturare, contracte și IVR | Timp mediu de apel de la 6 min la 1:30 (−75%), 77% apeluri rezolvate fără operator, 91% feedback pozitiv, în producție în 4 săptămâni | [Wonderful, studiu de caz](https://www.wonderful.ai/blog-articles/ppc-energie), datat 2026-05-15 în pagină; cifrele de la vânzător, nereverificate |
-| RecovIA (cu startup-ul 3X7AI) | Pregătește un dosar de recuperare a creanțelor în sub 2 minute: verifică actele, alege instanța, generează cererile | Locul 2 la FT Innovative Lawyers Awards Europe 2026, 24 din 27 de puncte | [Profit.ro](https://profit.ro/legal/ppc-romania-locul-2-la-financial-times-innovative-lawyers-awards-europe-2026-recovia-solutia-ai-care-duce-inovatia-juridica-romaneasca-pe-scena-europeana-22789183), 2026; pagina a dat 403, faptele sunt din rezumatul căutării |
+| Agent vocal PPC Energie (cu Wonderful) | Răspunde la întrebări despre facturi și modalități de plată, înregistrează dovezi de plată; legat de sistemele de facturare, contracte și IVR | Titlul spune -75% la timpul de apel, în 4 săptămâni. Un angajat Wonderful dă pe LinkedIn: de la 6 min la 90 s, 77% „containment”, 91% feedback pozitiv | [Wonderful, studiu de caz](https://www.wonderful.ai/blog-articles/ppc-energie), datat 2026-05-15 în pagină. La verificare am putut citi doar titlul; cifrele sunt de la vânzător și nu le cităm ca fapte |
+| RecovIA (cu startup-ul 3X7AI) | Pregătește un dosar de recuperare a creanțelor: verifică actele, alege instanța, generează cererile. Autorul notează „sub 2 minute”; nu am putut confirma | Locul 2 la FT Innovative Lawyers Awards Europe 2026, categoria In-house, Digital Solutions, 24 din 27 de puncte, ceremonie pe 2026-09-24 | [Profit.ro](https://profit.ro/legal/ppc-romania-locul-2-la-financial-times-innovative-lawyers-awards-europe-2026-recovia-solutia-ai-care-duce-inovatia-juridica-romaneasca-pe-scena-europeana-22789183), 2026. Premiul e confirmat prin rezumate de căutare, nu prin pagina completă sau de FT |
 
 Ipoteze:
 
@@ -51,11 +52,12 @@ Ipoteze:
 
 ## Concursuri și programe pentru studenți
 
-### CleanTech Hackathon 2025 (singurul hackathon public cu probleme de la PPC)
+### CleanTech Hackathon 2025
 
 Organizat de Techcelerator la Energy Expo, 23-24 mai 2025, cu sprijinul Ministerului Energiei și
-al PPC România. Pentru startup-uri, nu pentru studenți. Problemele au venit de la PPC, Delgaz,
-Romgaz și alte firme din energie, dar sursele nu spun care e a cui.
+al PPC România. Pentru startup-uri, nu pentru studenți. StartupCafe numește PPC doar ca susținător,
+iar altă publicație de startup-uri atribuie problemele și PPC, Delgaz și Romgaz. Nicio sursă nu spune
+care problemă e a cui.
 Surse: [StartupCafe, anunț](https://startupcafe.ro/inscrieri-2025-cele-9-provocari-ale-competitiei-cleantech-hackathon-cu-premii-totale-de-22-000-eur-pentru-startup-uri-romanesti-de-solutii-ai-pentru-energie-81133)
 (2025-05-15), [StartupCafe, câștigători](https://startupcafe.ro/castigatori-competitie-startup-solutii-sector-energie-sustenabila-cleantech-hackathon-2025-81716)
 (2025-05-29).
@@ -66,7 +68,7 @@ Surse: [StartupCafe, anunț](https://startupcafe.ro/inscrieri-2025-cele-9-provoc
 | 2 | Platforme care integrează datele din fluxurile de energie ale prosumatorilor |
 | 3 | Platforme prin care clienții co-investesc în regenerabile |
 | 4 | Optimizarea rețelelor urbane de stații de încărcare prin modelare predictivă |
-| 5 | Digital twin pentru defecte și nevoi de intervenție |
+| 5 | Digital twin pentru mentenanță predictivă și securitate cibernetică |
 | 6 | AI și agentic AI cu platforme integrate de management (guvernanța datelor, documente, acțiuni corective, acces) |
 | 7 | Drone și software pentru automatizarea inspecțiilor |
 | 8 | Estimarea consumului și a producției pe joasă tensiune cu AI |
@@ -75,7 +77,7 @@ Surse: [StartupCafe, anunț](https://startupcafe.ro/inscrieri-2025-cele-9-provoc
 Câștigători: YellowGrid (locul 1, managementul energiei pentru prosumatori, cu vânzarea surplusului
 la preț de piață), WiseWatts (copilot AI pentru optimizarea consumului), Procesio (automatizare de
 procese și extragere de date din documente cu LLM). 130 de înscriși, 30 de soluții, 14 echipe
-finaliste. Ordinea locurilor 2 și 3 diferă între surse.
+finaliste. Ordinea locurilor 2 și 3 diferă între surse; StartupCafe dă WiseWatts pe 2 și Procesio pe 3.
 
 ### Burse PPC Renewables
 
@@ -85,13 +87,6 @@ finaliste. Ordinea locurilor 2 și 3 diferă între surse.
 | Laborator IoT la Automatică și Calculatoare (UPB) și 8 burse pe an | Proiecte de digitalizare în energie | [Comunicat PPC Renewables](https://www.ppcenergy.ro/wp-content/uploads/comunicat-presa-ppc-renewables-romania-laborator-politehnica.pdf), 2026 după Economedia |
 
 Nu am găsit niciun hackathon pentru studenți organizat de PPC România înainte de SmartHack 2026.
-
-## Pentru alte teme (nu le-am cercetat)
-
-- Tema 6, grupul în afara României: [PPC și AWS, centru de date în Macedonia de Vest](https://www.forbes.ro/acord-strategic-intre-ppc-si-amazon-pentru-un-mega-centru-de-date-521290);
-  [PPC vrea să aducă modelul de AI gigafactory și în România](https://economedia.ro/?p=302304);
-  [studiu de caz Microsoft cu PPC Grecia pe Azure](https://microsoft.com/en/customers/story/1589540508791095885-ppc-energy-azure-en-greece).
-- Tema 1, PPC Energie: agentul vocal de mai sus răspunde la întrebări despre facturi.
 
 ## Ce date ar putea da PPC
 
@@ -114,7 +109,7 @@ deschidere publică a datelor.
    Echipa de ML lucrează exact pe stack-ul pentru asta.
 2. **Calitatea și anomaliile datelor de contorizare.** Platforma de contorizare e mândria echipei
    de date (talk DevTalks, slide-ul 6), iar validarea automată e deja o problemă recunoscută.
-3. **Agent LLM care economisește timp de operator sau de jurist.** PPC are deja doi astfel de
-   agenți în producție și îi prezintă public cu cifre de timp economisit. Un agent peste facturi,
+3. **Agent LLM care economisește timp de operator sau de jurist.** Sursele publice descriu doi
+   astfel de agenți, prezentați cu cifre de timp economisit. Un agent peste facturi,
    sesizări sau documente ar continua tiparul. Probabilitate mai mică decât primele două, pentru că
    anunțurile de ML nu cer LLM-uri.

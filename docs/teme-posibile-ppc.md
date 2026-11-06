@@ -19,6 +19,18 @@ Când cele două liste se contrazic, are prioritate aceasta, pentru că e mai no
 | 5 | Agent LLM peste text sau documente: sesizări, PDF-uri, chatbot intern | ReClassAI, LegalRoute, Inverter Extractor, AgentHub | Medie |
 | 6 | Mobilitate electrică: ocupare și planificarea încărcărilor | PPC Blue | Mică |
 
+## Ce a adăugat research-ul public
+
+Dovezile stau în fișierele legate. Tema reală rămâne necunoscută.
+
+| Direcție | Ce o susține | Unde |
+| --- | --- | --- |
+| Anomalii și furt | Cazuri publice de furt, costul intră în tarif | [ppc-produs-retele.md](ppc-produs-retele.md) |
+| Prognoză | Temele de bursă PPC Renewables din august 2026, joburile de ML | [ppc-produs-ai-date.md](ppc-produs-ai-date.md) |
+| Flexibilitate | Pilotul și trei oferte cu preț pe interval, măsurate doar cu comparații simple | [ppc-produs-energie.md](ppc-produs-energie.md) |
+| Prosumatori nevăzuți (direcție nouă) | Declarația directorului general despre baterii, MaxControl, problema 2 de la CleanTech | [ppc-produs-retele.md](ppc-produs-retele.md) |
+| Baterii la parcuri | Cinci proiecte BESS anunțate în 2026 | [ppc-produs-renewables.md](ppc-produs-renewables.md) |
+
 ## Lista largă de 50 de teme
 
 Probabilitatea este o estimare. Zona arată ce direcție pregătită acoperă tema: **A** prognoză și
