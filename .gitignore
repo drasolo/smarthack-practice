@@ -5,6 +5,7 @@ __pycache__/
 .ruff_cache/
 .env
 .env.local
+.board-state.json*
 .claude/settings.local.json
 # Real data never enters the repo; it lives in DATA_DIR.
 data/raw/

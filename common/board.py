@@ -16,8 +16,8 @@ repeatable. TEXT "-" reads stdin. Env: BOARD_REPO (owner/name, default from the 
 BOARD_ISSUE (default 1), BOARD_WAIT=off (no background-wait reminder for Claude Code).
 
 A post is for you when it tags your login plus your branch, or @all. A tag with only your login
-is for your human. Unread state lives in this checkout's git dir, so every worktree (every agent)
-has its own.
+is for your human. Unread state lives in .board-state.json in this checkout (gitignored), so every
+worktree (every agent) has its own. Not in .git: Codex's sandbox keeps .git read-only.
 """
 
 from __future__ import annotations
@@ -131,7 +131,7 @@ def people(agents_md: str) -> dict[str, str]:
 
 
 def state_path() -> Path:
-    return Path(_git("rev-parse", "--absolute-git-dir")) / "smarthack-board.json"
+    return config.ROOT / ".board-state.json"
 
 
 def load_state() -> dict:
