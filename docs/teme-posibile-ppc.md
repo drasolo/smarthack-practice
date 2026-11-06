@@ -15,7 +15,7 @@ Când cele două liste se contrazic, are prioritate aceasta, pentru că e mai no
 | 1 | Anomalii și contoare defecte pe datele de smart metering | Slide 6, Energy Anomaly Detection, 192M rânduri pe zi | Mare |
 | 2 | Dashboard asistat de AI: întrebi datele în limbaj natural | Slide 6, Redshift în stack | Mare |
 | 3 | Prognoză de consum sau producție, cu costul erorii în lei | Slide 4, proiectele 05 și 08, exemplul de pe slide 13 | Medie-mare |
-| 4 | Flexibilitate: cât consum mută clienții în orele ieftine sau gratuite | Pilotul „Zero Active Electricity” | Medie |
+| 4 | Flexibilitate: cât consum mută clienții în orele ieftine sau gratuite | Pilotul „Energie Electrică Activă Zero” | Medie |
 | 5 | Agent LLM peste text sau documente: sesizări, PDF-uri, chatbot intern | ReClassAI, LegalRoute, Inverter Extractor, AgentHub | Medie |
 | 6 | Mobilitate electrică: ocupare și planificarea încărcărilor | PPC Blue | Mică |
 

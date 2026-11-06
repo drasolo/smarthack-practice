@@ -2,7 +2,10 @@
 
 Ce este PZU, cum funcționează și ce a arătat backtest-ul nostru pe prețuri reale.
 
-Surse: o conversație anterioară pentru descrierea pieței, nereverificată pe site-ul OPCOM, și
+Surse: [anunțul OPCOM](https://opcom.ro/anunturi-stiri-comunicate-tip/en/1426/1) din 12 septembrie
+2025 pentru trecerea la 15 minute, [Nord Pool](https://support.nordpoolgroup.com/support/solutions/articles/8000121859-about-sdac-15-minute-member-test)
+pentru închiderea licitației SDAC, o conversație anterioară pentru restul descrierii pieței,
+nereverificat, și
 `results_real/results.json` din proiectul local `ro-bess-forecast` de pe laptopul lui Dragoș. Ultima
 verificare: 2026-11-06.
 
@@ -14,7 +17,7 @@ a ajuns foarte aproape, la 72,0%.
 
 ## Cum funcționează
 
-- Ofertele pentru ziua D se depun până la 12:00 CET în ziua D-1.
+- Licitația SDAC se închide la 12:00 CET în ziua D-1. N-am verificat ora în regulile OPCOM.
 - Licitația stabilește un preț pentru fiecare interval de 15 minute, 96 pe zi, de la 1 octombrie 2025.
 - România este cuplată prin SDAC, deci prețul depinde de cerere și ofertă în toată regiunea cuplată.
 - După PZU urmează piața intraday și piețele de echilibrare. Costurile de dezechilibru apar când

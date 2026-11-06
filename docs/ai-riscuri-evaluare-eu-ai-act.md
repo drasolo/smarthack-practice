@@ -3,8 +3,10 @@
 Ce riscuri AI subliniază PPC, cum le putem arăta rezolvate în demo și ce spune EU AI Act.
 
 Surse: [prezentarea PPC](surse/prezentare-ppc-ai-awareness.pptx), slide-urile 19-30, și documentul
-de pregătire pentru interpretarea Anexei III. Cifrele și datele legale vin din prezentare și nu sunt
-reverificate. Ce scrie aici nu e consultanță juridică. Ultima verificare: 2026-11-06.
+de pregătire pentru interpretarea Anexei III. Termenele EU AI Act și textul Anexei III sunt verificate
+în surse juridice publice, citate mai jos, nu în Jurnalul Oficial. Amenzile și statisticile vin din
+prezentare și nu sunt reverificate. Ce scrie aici nu e consultanță juridică. Ultima verificare:
+2026-11-06.
 
 ## Pe scurt
 
@@ -82,11 +84,17 @@ la hackathon.
 
 ## EU AI Act (slide-urile 29-30)
 
-| Nivel | Exemple | Obligații | Aplicare (conform prezentării) |
+**Prezentarea PPC e depășită la termene.** Ea dă august 2026 pentru risc ridicat, dar Regulamentul
+(UE) 2026/1744 (AI Omnibus), în vigoare din 27 iulie 2026, a mutat termenul. Obligațiile de
+transparență nu s-au mutat. Surse:
+[Legal 500](https://www.legal500.com/intelligence/european-union/technology/eu-digital-omnibus-on-ai-enters-into-force),
+[Gibson Dunn](https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/).
+
+| Nivel | Exemple | Obligații | Se aplică din |
 | --- | --- | --- | --- |
 | Inacceptabil, interzis | Scor social, manipulare, exploatarea grupurilor vulnerabile | Interzis | Februarie 2025 |
-| Ridicat | Recrutare, sănătate, infrastructură critică, credit, justiție | Date de calitate, supraveghere umană, jurnale, documentație, audituri | August 2026 |
-| Limitat | Chatbot, deepfake, recunoașterea emoțiilor | Utilizatorul trebuie informat că interacționează cu AI | Februarie 2025 / august 2026 |
+| Ridicat | Recrutare, sănătate, infrastructură critică, credit, justiție | Date de calitate, supraveghere umană, jurnale, documentație, audituri | 2 decembrie 2027 (Anexa III); 2 august 2028 (AI în produse reglementate) |
+| Limitat | Chatbot, deepfake, recunoașterea emoțiilor | Utilizatorul trebuie informat că interacționează cu AI | 2 august 2026, deci deja se aplică |
 | Minim | Filtre spam, jocuri | Fără obligații speciale | Se aplică legile obișnuite |
 
 | Amendă maximă | Când |
@@ -100,8 +108,9 @@ drepturilor de autor și rezumare a datelor de antrenare.
 
 ### Cum ne încadrăm (ipoteză de argumentare)
 
-Anexa III, punctul 2 încadrează la risc ridicat sistemele folosite ca „safety components in the
-management and operation of [...] the supply of [...] electricity”. Un triaj pentru inspectori sau o
+[Anexa III, punctul 2](https://artificialintelligenceact.eu/annex/3/) încadrează la risc ridicat
+sistemele folosite ca „safety components in the management and operation of critical digital
+infrastructure, road traffic, or in the supply of water, gas, heating or electricity”. Un triaj pentru inspectori sau o
 prognoză pentru tranzacționare nu este componentă de siguranță, deci putem argumenta risc limitat sau
 minim. Un chatbot pentru clienți are obligația de transparență. Prezentarea listează infrastructura
 critică la risc ridicat, așa că arătăm oricum omul în buclă.
@@ -115,4 +124,5 @@ critică la risc ridicat, așa că arătăm oricum omul în buclă.
 - **Om în buclă:** AI-ul propune, omul aprobă, iar interfața spune clar ce a generat AI-ul.
 - **Date sigure:** datele clienților nu pleacă brute spre un LLM. Le mascăm sau folosim un model
   local.
-- **EU AI Act:** un slide cu încadrarea de mai sus.
+- **EU AI Act:** un slide cu încadrarea de mai sus și termenele corecte. Dacă folosim un chatbot,
+  obligația de a spune că e AI se aplică deja.
