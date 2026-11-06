@@ -12,7 +12,7 @@ verificare: 2026-11-06.
 | --- | --- |
 | Avem voie cu cod scris dinainte (schelet, utilitare generale)? | Regulamentul nu spune. Dacă da, îl declarăm în README |
 | Sunt permise uneltele AI de programare? | Regulamentul nu le menționează, iar tot fluxul nostru se bazează pe ele |
-| La ce oră începe și se termină, când sunt prezentările și care e termenul de predare? | Lipsesc de pe site și din regulament |
+| Care e termenul de predare pe GitHub și în ce ordine prezintă echipele? | Programul are stop coding la 12:00 și prezentări de la 13:00, dar nu spune când se predă și când urcă fiecare echipă |
 
 Nu știm dacă aceste întrebări au fost trimise și nici dacă s-a primit vreun răspuns.
 

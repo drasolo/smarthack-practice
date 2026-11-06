@@ -8,7 +8,7 @@ Tot ce știm despre eveniment, PPC și pregătire, împărțit pe subiecte. Caut
 
 | Vreau să aflu | Fișier |
 | --- | --- |
-| Când și unde e, ce permite regulamentul, cum se predă, premiile | [eveniment-si-regulament.md](eveniment-si-regulament.md) |
+| Când și unde e, programul pe ore, ce permite regulamentul, cum se predă, premiile | [eveniment-si-regulament.md](eveniment-si-regulament.md) |
 | Ce este PPC, ce companii are, ce date și ce tehnologii folosește | [ppc-companie-si-date.md](ppc-companie-si-date.md) |
 | Ce proiecte AI are deja PPC | [ppc-proiecte-ai.md](ppc-proiecte-ai.md) |
 | Ce conține prezentarea PPC, slide cu slide | [ppc-prezentare-pe-slideuri.md](ppc-prezentare-pe-slideuri.md) |
