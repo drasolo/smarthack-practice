@@ -55,7 +55,7 @@ the old version.
 
 ## Generated files
 
-- `evals/results/latest.md`: smoke rewrites it. Commit it only when you refresh the table on
-  purpose; otherwise run `git restore evals/results/latest.md` after smoke.
+- `evals/results/latest.md`: only `uv run dev.py eval` writes it. Smoke builds the table and leaves
+  the file alone. Commit it when you refresh the table on purpose.
 - `.claude/skills/`: edit `.agents/skills/`, then run `uv run dev.py sync-skills`.
 - `.board-state.json`: unread state for one checkout, ignored by git.

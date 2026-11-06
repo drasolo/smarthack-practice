@@ -139,9 +139,11 @@ def smoke() -> int:
 
     from evals import run as evals
 
+    # Build the table without saving it: smoke runs on the fake LLM, and the committed table
+    # holds the real results.
     try:
-        evals.main()
-        step("eval table", True, "evals/results/latest.md")
+        print(evals.build())
+        step("eval table", True, "built, evals/results/latest.md unchanged")
     except Exception as error:  # noqa: BLE001
         step("eval table", False, repr(error))
 
