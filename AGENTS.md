@@ -17,7 +17,7 @@ demo waits. Background on the event, PPC and our preparation is in `docs/`: star
 | Role | Person | GitHub | Folders |
 | --- | --- | --- | --- |
 | backend | Dragoș | `@drasolo` | `api/`, `common/`, `dev.py`; merges into `main` |
-| data | | | `ml/`, `evals/`, `scripts/`, `data/sample/` |
+| data | Teo | `@TeoPana` | `ml/`, `evals/`, `scripts/`, `data/sample/` |
 | ui | | | `ui/`, `pitch/` |
 | everyone | | | `contract/`, `CONTEXT.md`, `AGENTS/`: post to `@all` before changing |
 | anyone | | | `docs/`, and `tests/` for the code you change |

@@ -75,6 +75,13 @@ def score(readings: pd.DataFrame, recent_days: int = RECENT_DAYS) -> pd.DataFram
             start = end = peak["ts"].tz_convert(config.TIMEZONE).date()
         else:
             start, end = cutoff, last_day
+        # A flatline's evidence covers its own days, so an old one doesn't read as "recent equals
+        # baseline". Other kinds keep the recent window (a spike day's total would contradict
+        # the spike explanation, which says daily use stays normal).
+        inside = g["day"].between(start, end) if kind == "flatline_zero" else g["day"] >= cutoff
+        base_e = g.loc[~inside, "kwh"].median()
+        during = g.loc[inside, "kwh"].median()
+        change_e = (during - base_e) / base_e * 100 if base_e and base_e > 0 else 0.0
         rows.append(
             {
                 "meter_id": meter_id,
@@ -82,9 +89,10 @@ def score(readings: pd.DataFrame, recent_days: int = RECENT_DAYS) -> pd.DataFram
                 "kind": kind,
                 "start": start,
                 "end": end,
-                "baseline_kwh_day": round(float(baseline or 0), 1),
-                "recent_kwh_day": round(float(recent or 0), 1),
-                "change_pct": round(float(change), 1),
+                "baseline_kwh_day": round(float(base_e or 0), 1),
+                "recent_kwh_day": round(float(during or 0), 1),
+                "change_pct": round(float(change_e), 1),
+                "drop_14d_pct": round(float(change), 1),  # naive ranking in evals, not evidence
                 "zero_days": int(zero_days),
                 "max_kwh_interval": round(peak_kwh, 2),
                 "spike_ratio": round(float(ratio), 1),

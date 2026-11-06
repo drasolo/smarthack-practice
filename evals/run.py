@@ -20,7 +20,7 @@ from ml.load import load_default, load_labels
 K = 10
 EXPLAINED = 5
 _DATE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}\.\d{1,2}\.\d{4}\b")
-_NUMBER = re.compile(r"-?\d+(?:[.,]\d+)?")
+_NUMBER = re.compile(r"(?<!\w)-?\d+(?:[.,]\d+)?")  # not digits glued to letters, like M0024
 _ROMANIAN = ("ă", "â", "î", "ș", "ț", " și ", " în ", " de ")
 
 
@@ -41,7 +41,7 @@ def detection_rows(scores, labels) -> list[str]:
         return ["No labels for this data, so no detection metrics. Inject labelled anomalies."]
     relevant = set(labels["meter_id"])
     ours = list(scores["meter_id"])
-    naive = list(scores.sort_values("change_pct")["meter_id"])  # biggest drop first
+    naive = list(scores.sort_values("drop_14d_pct")["meter_id"])  # biggest recent drop first
     row = lambda name, ranked: (  # noqa: E731
         f"| {name} | {precision_at_k(ranked, relevant, K):.2f} | "
         f"{recall_at_k(ranked, relevant, K):.2f} | {average_precision(ranked, relevant):.2f} |"

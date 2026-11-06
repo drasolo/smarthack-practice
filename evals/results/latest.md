@@ -1,4 +1,4 @@
-# Evaluation (2026-11-04 19:25, data: sample)
+# Evaluation (2026-11-06 17:37, data: sample)
 
 ## Detection
 
@@ -11,7 +11,7 @@ Labelled anomalies: 7 of 40 meters.
 
 ## Explanations
 
-LLM: fake, top 5 meters.
+LLM: claude-opus-5-5 (Claude plan), top 5 meters.
 
 | check | passed |
 | --- | --- |
