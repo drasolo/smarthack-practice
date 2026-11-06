@@ -1,13 +1,13 @@
-# Evaluation (2026-11-06 17:37, data: sample)
+# Evaluation (2026-11-06 20:37, data: sample)
 
 ## Detection
 
-Labelled anomalies: 7 of 40 meters.
+Labelled anomalies: 29 of 120 meters.
 
 | ranking | precision@10 | recall@10 | average precision |
 | --- | --- | --- | --- |
-| baseline scorer (ml/detect.py) | 0.70 | 1.00 | 1.00 |
-| naive: biggest drop first | 0.30 | 0.43 | 0.52 |
+| baseline scorer (ml/detect.py) | 0.70 | 0.24 | 0.64 |
+| naive: biggest drop first | 0.30 | 0.10 | 0.48 |
 
 ## Explanations
 
