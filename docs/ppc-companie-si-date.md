@@ -2,9 +2,9 @@
 
 Cine este PPC în România, ce companii are și cum arată platforma lui de date.
 
-Surse: [prezentarea PPC](surse/prezentare-ppc-ai-awareness.pptx), slide-urile 2-6; pentru pilotul
-de ore gratuite, Balkan Green Energy News (8 mai 2026), preluat din documentul de pregătire, fără
-reverificare. Ultima verificare: 2026-11-06.
+Surse: [prezentarea PPC](surse/prezentare-ppc-ai-awareness.pptx), slide-urile 2-6;
+[comunicatul PPC Energie](https://www.ppcenergy.ro/wp-content/uploads/Comunicat-de-presa-PPC-Energie-lanseaza-intervale-de-consum-cu-energie-activa-la-cost-zero.pdf)
+din 7 mai 2026 pentru pilot. Ultima verificare: 2026-11-06.
 
 ## Pe scurt
 
@@ -58,8 +58,10 @@ de prognoză costă bani reali.
 
 ## Pilotul de ore gratuite
 
-PPC Energie a rulat pilotul „Zero Active Electricity” în iunie-septembrie 2026: aproximativ 70 de
-ore gratuite pe lună pentru 5.000 de clienți cu contor inteligent. Rezultatele urmau să fie evaluate
-după septembrie.
+Programul pilot „Energie Electrică Activă Zero” a fost anunțat pentru iunie-septembrie 2026.
+
+Clienții primesc energie activă la 0 lei/kWh în intervale din timpul zilei, când producția
+fotovoltaică e mare, iar bonusul se calculează automat pe factură din citirile de la distribuitor.
+Condițiile și rezultatele din iunie sunt în [ppc-produs-energie.md](ppc-produs-energie.md).
 
 Proiectele AI existente sunt în [ppc-proiecte-ai.md](ppc-proiecte-ai.md).

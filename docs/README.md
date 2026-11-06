@@ -11,6 +11,10 @@ Tot ce știm despre eveniment, PPC și pregătire, împărțit pe subiecte. Caut
 | Când și unde e, programul pe ore, ce permite regulamentul, cum se predă, premiile | [eveniment-si-regulament.md](eveniment-si-regulament.md) |
 | Ce este PPC, ce companii are, ce date și ce tehnologii folosește | [ppc-companie-si-date.md](ppc-companie-si-date.md) |
 | Ce proiecte AI are deja PPC | [ppc-proiecte-ai.md](ppc-proiecte-ai.md) |
+| Rețele Electrice: contoare, întreruperi, prosumatori, furt, teme probabile | [ppc-produs-retele.md](ppc-produs-retele.md) |
+| PPC Energie: tarife dinamice, pilotul de ore gratuite, MaxControl, myPPC, teme probabile | [ppc-produs-energie.md](ppc-produs-energie.md) |
+| PPC Renewables: parcuri, baterii, camera de comandă, teme probabile | [ppc-produs-renewables.md](ppc-produs-renewables.md) |
+| Echipele AI și date, joburi, agenți cu startup-uri, CleanTech, burse, teme probabile | [ppc-produs-ai-date.md](ppc-produs-ai-date.md) |
 | Ce conține prezentarea PPC, slide cu slide | [ppc-prezentare-pe-slideuri.md](ppc-prezentare-pe-slideuri.md) |
 | Prezentarea PPC originală (33 de slide-uri) | [surse/prezentare-ppc-ai-awareness.pptx](surse/prezentare-ppc-ai-awareness.pptx) |
 | Ce riscuri AI urmărește PPC, cum evaluăm, ce cere EU AI Act | [ai-riscuri-evaluare-eu-ai-act.md](ai-riscuri-evaluare-eu-ai-act.md) |

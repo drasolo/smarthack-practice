@@ -2,7 +2,7 @@
 
 Surse publice despre activele din România, stadiul proiectelor și indicii pentru o temă de prognoză sau operare.
 
-Surse: pagini și comunicate PPC România, PPC Group și STRABAG, identificate mai jos prin S1-S16. Ultima verificare: 2026-11-06.
+Surse: pagini și comunicate PPC România, PPC Group și STRABAG, identificate mai jos prin S1-S16. Scris de agentul lui Teo și verificat de agentul lui Dragoș pe toate cele 16 surse. Ultima verificare: 2026-11-06.
 
 ## Ce merită pregătit
 
@@ -39,7 +39,7 @@ Tabelul arată capacități declarate la data sursei. Nu reprezintă un inventar
 | 2025-10-23 | PPC anunță faza a doua, cu încă 14 turbine de câte 6,1 MW, aproximativ 85 MW, lângă Bogdănița. | Extindere anunțată, care ar duce proiectul la peste 225 MW. [S5][s5] |
 | 2026-01-20 | Prima fază de 140 MW este descrisă ca fiind în curs de finalizare, cu a doua fază de 85 MW planificată. | Termenul estimat în 2024 nu confirmă stadiul din 2026. [S3][s3] |
 
-Pagina portofoliului desparte proiectele din Vaslui în Deleni, Viișoara Nord și Viișoara Sud, marcate în dezvoltare. [S1][s1], actualizat 2025-12-22. Asocierea exactă dintre aceste înregistrări, faze și viitoarele serii de producție rămâne de verificat. Nu am identificat în sursele primare consultate o confirmare a exploatării comerciale la data cercetării.
+Pagina portofoliului desparte proiectele din Vaslui în Deleni, Viișoara Nord și Viișoara Sud, marcate în dezvoltare. [S1][s1], actualizat 2025-12-22. Cele trei valori din pagină însumează 225,37 MW, cât cele două faze anunțate; asocierea exactă dintre înregistrări, faze și viitoarele serii de producție rămâne de verificat. Nu am identificat în sursele primare consultate o confirmare a exploatării comerciale la data cercetării.
 
 ## Baterii anunțate la parcuri existente
 
@@ -71,7 +71,7 @@ Pentru a evita dublarea soluțiilor interne, comparația cu Smart Sentry și Sho
 
 ## Diferențe de păstrat la verificarea finală
 
-Fiecare rând păstrează ambele valori și sursele lor. Nu alegem o explicație tehnică fără confirmare. Conform cererii de research de pe board, aceste diferențe sunt predate verificatorului în acest singur fișier.
+Fiecare rând păstrează ambele valori și sursele lor. Nu alegem o explicație tehnică fără confirmare.
 
 | Subiect | Ce diferă | Cum folosim informația |
 | --- | --- | --- |
@@ -79,8 +79,8 @@ Fiecare rând păstrează ambele valori și sursele lor. Nu alegem o explicație
 | Numărul centralelor solare | Introducerea paginii solare spune șapte centrale și peste 125 MW. Tabelul aceleiași pagini include și Kinisi și Ciorani. | Pagina conține informații care nu par sincronizate. Nu folosim introducerea pentru totalul curent. [S16][s16], fără dată, consultat 2026-11-06 |
 | Topolog | Titlul comunicatului spune 13 MW, corpul 13,5 MW și 27 MWh. Pagina proiectului spune 26,83 MWh. | În tabel folosim corpul comunicatului datat. Diferența de energie rămâne deschisă. [S9][s9], 2026-03-19; [S13][s13], fără dată, consultat 2026-11-06 |
 | Târgușor | Comunicatul spune 120 MWh. Pagina de finanțare indică un obiectiv de 120,24 MWh. | Păstrăm diferența, fără să presupunem capacitate utilă sau nominală. [S10][s10], 2026-04-07; [S14][s14], fără dată, consultat 2026-11-06 |
-| Puterea parcului Colibași | Pagina portofoliului spune 6,24 MW, comunicatul din ianuarie 6,46 MW, iar pagina finanțării BESS 5,99 MW. | Cerem definiția puterii, AC sau DC, și data valorii înainte de normalizarea producției. AC/DC este o ipoteză de explicație. [S1][s1], 2025-12-22; [S3][s3], 2026-01-20; [S15][s15], fără dată, consultat 2026-11-06 |
-| Ținta României pentru 2030 | Comunicatul din iunie folosește 5,3 GW, cel din iulie 4,7 GW. | Nu tratăm țintele ca active construite. Rămâne de verificat dacă diferența ține de perimetru sau de actualizarea planului. [S11][s11], 2026-06-11; [S12][s12], 2026-07-15 |
+| Puterea parcului Colibași | Pagina portofoliului spune 6,24 MW, comunicatul din ianuarie 6,46 MW, iar pagina finanțării BESS 5,99 MW. Aceeași pagină scrie la indicator „8,94 MW” pentru baterie, foarte probabil MWh. | Cerem definiția puterii, AC sau DC, și data valorii înainte de normalizarea producției. AC/DC este o ipoteză de explicație. [S1][s1], 2025-12-22; [S3][s3], 2026-01-20; [S15][s15], fără dată, consultat 2026-11-06 |
+| Ținta PPC în România pentru 2030 | Comunicatul din iunie folosește 5,3 GW, cel din iulie 4,7 GW. | Nu tratăm țintele ca active construite. Rămâne de verificat dacă diferența ține de perimetru sau de actualizarea planului. [S11][s11], 2026-06-11; [S12][s12], 2026-07-15 |
 
 Nu am identificat în paginile consultate un set public de date SCADA la nivel de turbină sau un anunț că PPC îl va furniza la SmartHack. Aceasta este limita cercetării, nu dovada că un astfel de set nu există.
 

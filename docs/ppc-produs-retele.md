@@ -3,7 +3,8 @@
 Ce face distribuitorul din grupul PPC, ce date are și ce temă ar putea veni de aici.
 
 Surse: comunicate și pagini Rețele Electrice, ANRE prin presă, articole din presa economică. Fiecare
-fapt are linkul și data lui. Ultima verificare: 2026-11-06.
+fapt are linkul și data lui. Scris de agentul lui Teo și verificat de agentul lui Dragoș, sursă cu
+sursă. Ultima verificare: 2026-11-06.
 
 ## Pe scurt
 
@@ -11,7 +12,7 @@ fapt are linkul și data lui. Ultima verificare: 2026-11-06.
   platformă care trimite zilnic furnizorilor curbele de sarcină. Cifrele platformei sunt deja în
   [ppc-companie-si-date.md](ppc-companie-si-date.md).
 - Construiește acum sistemele în care ar intra un model AI: AADMS (SCADA, DMS, OMS) și WFM din
-  noiembrie 2025, apoi un GIS nou din aprilie 2026. Directorul general vorbește explicit de
+  noiembrie 2025, apoi licitația pentru un GIS nou, lansată în aprilie 2026. Directorul general vorbește explicit de
   „algoritmi de inteligență artificială” pentru reziliența rețelei.
 - Are trei dureri publice: furtul de energie (circa 700 de cazuri în două luni din 2026), prosumatorii
   pe care nu îi vede (bateriile despre care „habar n-avem”) și întreruperile (SAIDI național a crescut
@@ -65,12 +66,13 @@ SAIDI este durata medie de întrerupere pe client, în minute pe an. SAIFI este 
   142,8 la 74,62 minute).
 - Întreruperile planificate sunt mari în Banat și Dobrogea, de 5-6 ori peste Muntenia.
 - La nivel național, SAIDI a fost 236 de minute în 2025, față de 229 în 2024: prima creștere din
-  ultimii ani. 145 de minute planificate, 91 neplanificate. Date ANRE, prin
+  ultimii ani. 145 de minute planificate, 91 neplanificate atribuite distribuitorului. Date ANRE, prin
   [Economica.net](https://www.economica.net/?p=961648), 2026-07-22. Valorile pe operator pentru
   Rețele Electrice nu apar în text.
 - Întreruperile planificate se publică săptămânal, ca PDF, pe
-  [reteleelectrice.ro](https://www.reteleelectrice.ro/en/outages/planned). Nu am găsit o hartă a
-  avariilor sau o aplicație mobilă.
+  [reteleelectrice.ro](https://www.reteleelectrice.ro/en/outages/planned). Aceeași pagină anunță o
+  hartă a întreruperilor planificate și accidentale, actualizată la 15 minute. Nu am găsit o
+  aplicație mobilă.
 
 ## Digitalizarea rețelei
 
@@ -78,7 +80,7 @@ SAIDI este durata medie de întrerupere pe client, în minute pe an. SAIFI este 
 | --- | --- | --- | --- |
 | AADMS | Platformă integrată: SCADA, DMS/EMS (analiza și modelarea rețelei), OMS (gestiunea întreruperilor) | împreună cu WFM, peste 135 mil. lei; 2 ani; DMS/EMS din fonduri UE | [comunicat](https://www.reteleelectrice.ro/en/?p=24193), 2025-11-21 |
 | WFM | Planificarea echipelor de operare și mentenanță | inclus mai sus | același comunicat |
-| GIS & Topology | Topologia rețelei, date de teren prin aplicație mobilă, simulare, „starea de sănătate” a rețelei, schimb de date cu AADMS și cu sistemul de contorizare | până la 45 mil. lei; 17 luni de implementare | [comunicat](https://www.reteleelectrice.ro/en/?p=25728), 2026-04-06 |
+| GIS & Topology | În licitație. Topologia rețelei, date de teren prin aplicație mobilă, simulare, „starea de sănătate” a rețelei, schimb de date cu AADMS și cu sistemul de contorizare | până la 45 mil. lei; 17 luni de implementare | [comunicat](https://www.reteleelectrice.ro/en/?p=25728), 2026-04-06 |
 
 Beneficii declarate pentru AADMS și WFM: intervenții mai rapide la întreruperi, durate mai mici ale
 întreruperilor, integrarea regenerabilelor. Directorul general: sistemele vor permite folosirea
@@ -98,9 +100,9 @@ Ce a spus directorul general la aceeași conferință (2025-02-09):
 
 - Distribuitorul are nevoie de „datele de invertor, datele de producție, datele de măsură” ca să
   vadă congestiile și să prognozeze.
-- Despre multe baterii deja instalate „habar n-avem”. Le observă doar din forma curbelor de
+- Despre multe baterii deja instalate „habar n-avem”. A observat schimbări în forma curbelor de
   producție.
-- Agregarea și flexibilitatea nu se pot dezvolta „fără aceste date”.
+- Agregarea și flexibilitatea, dacă se vor dezvolta, nu se pot face „fără aceste date”.
 - Asociația prosumatorilor a numit propunerea „un control abuziv”.
 
 Nu am găsit numărul de prosumatori din aria Rețele Electrice pentru 2026.
@@ -125,10 +127,11 @@ ReClassAI, modelul care reclasifică sesizările de pe site, este deja descris �
 
 - Lungimea rețelei: 134.000 km pe [Our activity](https://www.reteleelectrice.ro/en/?p=18659) și în
   [Economica.net](https://www.economica.net/prosumatori-retea-date-control_809199.html)
-  (2025-02-09), 136.000 km în prezentarea PPC și în Business Forum (2026-04-03). Probabil cifra
+  (2025-02-09), 136.000 km în prezentarea PPC, în Business Forum (2026-04-03) și în comunicatul GIS (2026-04-06). Probabil cifra
   nouă e 136.000.
 - Viteza datelor către furnizori: „în minute” în prezentarea PPC, „zilnic” în comunicatul din martie
-  2025. Ipoteză: s-a trecut la streaming (Kafka) după martie 2025.
+  2025, „near real-time” în [talkul DevTalks](https://www.devtalks.ro/speakers/765-anda-spataru) din
+  iunie 2026. Ipoteză: viteza a crescut după martie 2025.
 
 ## Ce date ar putea da PPC din zona asta
 
