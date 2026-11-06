@@ -20,7 +20,7 @@ from ml.load import load_default, load_labels
 K = 10
 EXPLAINED = 5
 _DATE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}\.\d{1,2}\.\d{4}\b")
-_NUMBER = re.compile(r"(?<!\w)-?\d+(?:[.,]\d+)?")  # not digits glued to letters, like M0024
+_NUMBER = re.compile(r"-?\d+(?:[.,]\d+)?")
 _ROMANIAN = ("ă", "â", "î", "ș", "ț", " și ", " în ", " de ")
 
 
@@ -29,6 +29,7 @@ def grounded(explanation: Explanation, anomaly: Anomaly) -> bool:
     allowed = [float(v) for v in anomaly.evidence.model_dump().values()]
     allowed += [abs(v) for v in allowed] + [float(K), 14.0]
     text = " ".join([explanation.summary, *explanation.reasons, explanation.next_step])
+    text = text.replace(anomaly.meter_id, " ")  # the ID's digits are not a claim
     for raw in _NUMBER.findall(_DATE.sub(" ", text)):
         value = float(raw.replace(",", "."))
         if not any(abs(value - a) <= max(0.051, 0.01 * abs(a)) for a in allowed):
