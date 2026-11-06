@@ -57,6 +57,7 @@ def fake(monkeypatch, tmp_path):
     }
     monkeypatch.setattr(board, "_gh", gh)
     monkeypatch.setattr(board, "_git", lambda *args: answers[args])
+    monkeypatch.setattr(board, "state_path", lambda: git_dir / "state.json")
     monkeypatch.delenv("BOARD_REPO", raising=False)
     monkeypatch.delenv("BOARD_ISSUE", raising=False)
     Fake.comments, Fake.posted = [], []
