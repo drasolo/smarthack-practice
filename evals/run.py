@@ -22,19 +22,33 @@ EXPLAINED = 5
 _DATE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\b\d{1,2}\.\d{1,2}\.\d{4}\b")
 _NUMBER = re.compile(r"-?\d+(?:[.,]\d+)?")
 _ROMANIAN = ("ă", "â", "î", "ș", "ț", " și ", " în ", " de ")
+# The evidence an explanation of each kind must cite: at least one of these numbers.
+KEY_FIELDS = {
+    "sudden_drop": ("change_pct", "recent_kwh_day"),
+    "flatline_zero": ("zero_days",),
+    "spike": ("spike_ratio", "max_kwh_interval"),
+    "other": (),
+}
+
+
+def _close(value: float, targets: list[float]) -> bool:
+    return any(abs(value - t) <= max(0.051, 0.01 * abs(t)) for t in targets)
 
 
 def grounded(explanation: Explanation, anomaly: Anomaly) -> bool:
-    """Every number in the text matches an evidence value (or its absolute value, or K)."""
-    allowed = [float(v) for v in anomaly.evidence.model_dump().values()]
+    """Every number matches an evidence value (or its absolute value, or K), and the text cites
+    the evidence that defines the anomaly's kind (KEY_FIELDS)."""
+    evidence = anomaly.evidence.model_dump()
+    allowed = [float(v) for v in evidence.values()]
     allowed += [abs(v) for v in allowed] + [float(K), 14.0]
     text = " ".join([explanation.summary, *explanation.reasons, explanation.next_step])
     text = text.replace(anomaly.meter_id, " ")  # the ID's digits are not a claim
-    for raw in _NUMBER.findall(_DATE.sub(" ", text)):
-        value = float(raw.replace(",", "."))
-        if not any(abs(value - a) <= max(0.051, 0.01 * abs(a)) for a in allowed):
-            return False
-    return True
+    numbers = [float(n.replace(",", ".")) for n in _NUMBER.findall(_DATE.sub(" ", text))]
+    if not all(_close(n, allowed) for n in numbers):
+        return False
+    keys = [float(evidence[f]) for f in KEY_FIELDS[anomaly.kind]]
+    keys += [abs(k) for k in keys]
+    return not keys or any(_close(n, keys) for n in numbers)
 
 
 def detection_rows(scores, labels) -> list[str]:
@@ -63,10 +77,13 @@ def explanation_rows(scores) -> list[str]:
     language = "written in Romanian" if config.LLM_LANGUAGE == "ro" else None
     if language:
         checks[language] = 0
+    per_kind: dict[str, list[bool]] = {}
     for anomaly in anomalies:
         explanation = explain_anomaly(anomaly)  # schema-validated by construction
         checks["valid schema"] += 1
-        checks["numbers grounded in evidence"] += grounded(explanation, anomaly)
+        ok = grounded(explanation, anomaly)
+        checks["numbers grounded in evidence"] += ok
+        per_kind.setdefault(anomaly.kind, []).append(ok)
         text = explanation.model_dump_json()
         checks["no PII in output"] += not pii.find(text)
         if language:
@@ -78,6 +95,10 @@ def explanation_rows(scores) -> list[str]:
         "| check | passed |",
         "| --- | --- |",
         *[f"| {name} | {passed}/{n} |" for name, passed in checks.items()],
+        *[
+            f"| grounded, {kind} | {sum(oks)}/{len(oks)} |"
+            for kind, oks in sorted(per_kind.items())
+        ],
     ]
 
 
