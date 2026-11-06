@@ -4,16 +4,17 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from common import config
 from evals.metrics import average_precision, precision_at_k
 from ml import detect, residual
-from ml.load import load_default, load_labels
+from ml.load import load_labels, read_readings
 from scripts import synth
 
 
 @pytest.fixture(scope="module")
 def sample():
-    readings, source = load_default()
-    return readings, residual.score(readings), load_labels(source)
+    readings = read_readings(config.SAMPLE_DIR / "readings.parquet")
+    return readings, residual.score(readings), load_labels("sample")
 
 
 def _flat_profile(days=30):
@@ -121,3 +122,35 @@ def test_a_lone_meter_keeps_its_own_drop():
     kwh = np.where(ts >= days[20], 0.04, 0.1) + np.random.default_rng(2).normal(0, 0.002, len(ts))
     readings = pd.DataFrame({"meter_id": "M1", "ts": ts, "kwh": kwh})
     assert residual.score(readings)["score"].iloc[0] > 0.5
+
+
+def _quarter_hours(days=30):
+    local = pd.date_range("2026-03-02", periods=days * 96, freq="15min", tz=config.TIMEZONE)
+    return local.tz_convert("UTC")
+
+
+def test_register_evidence_shows_the_fall_in_use():
+    ts = _quarter_hours()
+    use = np.where(ts >= ts[20 * 96], 0.04, 0.1) * np.random.default_rng(3).normal(1, 0.02, len(ts))
+    readings = pd.DataFrame({"meter_id": "M1", "ts": ts, "kwh": use.cumsum()})
+    row = residual.score(readings).iloc[0]
+    assert row["kind"] == "sudden_drop"
+    assert row["change_pct"] < -40
+    assert row["baseline_kwh_day"] < 15
+
+
+def test_unread_intervals_are_not_counted_as_missing_energy():
+    expected = np.ones((10, residual.SLOTS))
+    grid = np.full_like(expected, 0.4)
+    grid[:, :24] = np.nan
+    assert residual._missing_kwh(grid, expected, 0, 9) == pytest.approx(432)
+
+
+def test_a_date_with_no_readings_stays_a_gap():
+    ts = _quarter_hours(10)
+    kept = ts[(ts < ts[4 * 96]) | (ts >= ts[6 * 96])]
+    clean = pd.DataFrame({"meter_id": "M1", "ts": kept, "kwh": 0.1})
+    grids, days, _ = residual._grid(clean)
+    assert len(days) == 10
+    assert np.isnan(grids["M1"][4:6]).all()
+    assert np.isfinite(grids["M1"][7]).all()

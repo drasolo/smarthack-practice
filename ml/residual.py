@@ -44,6 +44,13 @@ def _undo_counter(kwh: pd.Series) -> pd.Series:
     return kwh
 
 
+def _clean(readings: pd.DataFrame) -> pd.DataFrame:
+    """Duplicates averaged and registers differenced, so scores and evidence read the same use."""
+    clean = readings.groupby(["meter_id", "ts"], as_index=False)["kwh"].mean()
+    clean["kwh"] = clean.groupby("meter_id")["kwh"].transform(_undo_counter)
+    return clean
+
+
 def _to_quarter_hours(clean: pd.DataFrame) -> pd.DataFrame:
     """Coarser data (hourly, say) is spread evenly over its 15-minute slots."""
     step = clean.groupby("meter_id")["ts"].diff().median()
@@ -57,15 +64,14 @@ def _to_quarter_hours(clean: pd.DataFrame) -> pd.DataFrame:
     return spread.reset_index(drop=True)
 
 
-def _grid(readings: pd.DataFrame, tz: str = config.TIMEZONE) -> tuple[dict, list, np.ndarray]:
+def _grid(clean: pd.DataFrame, tz: str = config.TIMEZONE) -> tuple[dict, list, np.ndarray]:
     """One days-by-slots array per meter, plus the days and a weekend flag per day."""
-    clean = readings.groupby(["meter_id", "ts"], as_index=False)["kwh"].mean()
-    clean["kwh"] = clean.groupby("meter_id")["kwh"].transform(_undo_counter)
     clean = _to_quarter_hours(clean)
     local = clean["ts"].dt.tz_convert(tz)
     clean["day"] = local.dt.date
     clean["slot"] = local.dt.hour * 4 + local.dt.minute // 15
-    days = sorted(clean["day"].unique())
+    # Every calendar day, so a date with no readings stays a gap instead of joining its neighbours.
+    days = list(pd.date_range(clean["day"].min(), clean["day"].max(), freq="D").date)
     day_at = {d: i for i, d in enumerate(days)}
     grids = {}
     for meter_id, g in clean.groupby("meter_id"):
@@ -183,9 +189,11 @@ def _zero_days(actual: np.ndarray, expected: np.ndarray) -> tuple[int, tuple[int
 
 def _is_step_across_day(errors: np.ndarray, band_errors: list, first: int, last: int) -> bool:
     """True when the shortfall is there from its first days and in every part of the day."""
-    gap = float(np.nanmean(-errors[first : last + 1]))
     opening = -errors[first : first + 3]
-    if gap <= 0 or not np.isfinite(opening).any():
+    if not np.isfinite(opening).any():
+        return False
+    gap = float(np.nanmean(-errors[first : last + 1]))
+    if gap <= 0:
         return False
     parts = [
         np.nanmean(-b[first : last + 1])
@@ -193,6 +201,13 @@ def _is_step_across_day(errors: np.ndarray, band_errors: list, first: int, last:
         if np.isfinite(b[first : last + 1]).any()
     ]
     return float(np.nanmean(opening)) >= 0.6 * gap and min(parts) >= 0.5 * gap
+
+
+def _missing_kwh(grid: np.ndarray, expected: np.ndarray, first: int, last: int) -> float:
+    """Expected minus actual, over the intervals that were read. A gap in the data isn't loss."""
+    actual, wanted = grid[first : last + 1], expected[first : last + 1]
+    read = np.isfinite(actual)
+    return max(float(wanted[read].sum() - actual[read].sum()), 0.0)
 
 
 def _meter_signals(grid, weekend, factor) -> dict:
@@ -227,13 +242,11 @@ def _meter_signals(grid, weekend, factor) -> dict:
         "spike": (spike_day, spike_day),
         "zero": zero_span,
     }[channel]
-    days_in = np.arange(window[0], window[1] + 1)
-    gap = np.nansum(expected[days_in]) - np.nansum(grid[days_in])
     return {
         "channel": channel,
         "score": signals[channel],
         "window": window,
-        "missing_kwh": 0.0 if channel == "spike" else max(float(gap), 0.0),
+        "missing_kwh": 0.0 if channel == "spike" else _missing_kwh(grid, expected, *window),
         "step": _is_step_across_day(errors, band_errors, *window),
     }
 
@@ -251,15 +264,16 @@ def _kind(found: dict, row: dict) -> str:
 
 def score(readings: pd.DataFrame) -> pd.DataFrame:
     """Same columns as detect.score, plus missing_kwh, ranked by this model's score."""
-    base = detect.score(readings).set_index("meter_id")
-    grids, days, weekend = _grid(readings)
+    clean = _clean(readings)
+    base = detect.score(clean).set_index("meter_id")
+    grids, days, weekend = _grid(clean)
     ratios = [_ratio(grid, _profile(grid, weekend), (0, SLOTS)) for grid in grids.values()]
     factor = np.ones(len(days))  # with too few peers the median is the meter itself
     if len(grids) >= MIN_PEERS:
         factor = np.nan_to_num(_nanmedian(np.vstack(ratios)), nan=1.0)
         factor = np.where(factor > 0, factor, 1.0)
 
-    daily = detect.daily_totals(readings)
+    daily = detect.daily_totals(clean)
     rows = []
     for meter_id, grid in grids.items():
         found = _meter_signals(grid, weekend, factor)
