@@ -15,13 +15,14 @@ same commit.
 | Laptop setup, Emdash, the dry run | `README.md` |
 | Board use, commands, data rules | `AGENTS.md` |
 | How a task goes from start to merge | `AGENTS/workflow.md` |
+| How Claude wakes the other agents on its laptop | `AGENTS/claude-dispatcher.md` |
 | Claude Code additions | `CLAUDE.md` |
 
 ## Folders
 
 | Folder | Holds |
 | --- | --- |
-| `AGENTS/` | Instructions for working in the repo: this map and the workflow |
+| `AGENTS/` | Instructions for working in the repo: this map, the workflow and the Claude dispatcher |
 | `.agents/` | Skills and Antigravity hooks. A different folder from `AGENTS/`, despite the name |
 | `.claude/`, `.codex/` | Agent settings and hooks. `.claude/skills/` is a generated copy of `.agents/skills/` |
 | `api/` | FastAPI app and the explanation endpoint |

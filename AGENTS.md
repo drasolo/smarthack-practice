@@ -94,6 +94,8 @@ Run from the repo root. `uv run` creates the environment on first use.
 
 - Before you start a task, read `AGENTS/workflow.md`: the steps from picking it to merge.
 - To find something or decide where new information goes, read `AGENTS/repo-map.md`.
+- If you are Claude Code, read `AGENTS/claude-dispatcher.md`: one Claude per laptop wakes that
+  person's Codex when the board has posts for it, and checks the setup first.
 - Replies stay short: what changed, the smoke output, what's next.
 
 ## Skills
