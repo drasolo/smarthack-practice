@@ -39,10 +39,13 @@ def fake(monkeypatch, tmp_path):
             Fake.posted.append(body)
             Fake.comments.append(comment(len(Fake.comments) + 100, body))
             return json.dumps({"id": len(Fake.comments) + 99})
+        if "--slurp" in args or "--paginate" in args:  # like gh 2.45, Ubuntu's apt version
+            raise board.BoardError("unknown flag: --slurp")
         path = args[-1]
-        since = path.split("since=")[1] if "since=" in path else ""
-        page = [c for c in Fake.comments if c["updated_at"] >= since]
-        return json.dumps([page])
+        query = dict(part.split("=", 1) for part in path.partition("?")[2].split("&") if part)
+        matching = [c for c in Fake.comments if c["updated_at"] >= query.get("since", "")]
+        page, size = int(query.get("page", 1)), int(query.get("per_page", 100))
+        return json.dumps(matching[(page - 1) * size : page * size])
 
     git_dir = tmp_path / "gitdir"
     git_dir.mkdir()
@@ -84,6 +87,10 @@ def test_compose_signs_and_addresses():
         ("[Ana's Codex · ml/x] claim: London loader", "other"),
         ("[Dragoș's Claude · api/agent-board] claim: the board", "own"),
         ("plain comment from the GitHub page, @drasolo", "human"),
+        # review fixes: a later @all is a mention, a path after a tag is text
+        ("[Ana's Codex · ml/x] claim: contract tweak, will post to @all first", "other"),
+        ("[Ana's Codex · ml/x] @drasolo api/app.py crashes on load", "human"),
+        ("[Ana's Codex · ml/x] @drasolo thanks, the loader works", "human"),
     ],
 )
 def test_classify(body, expected):
@@ -161,3 +168,60 @@ def test_port_blocks_are_stable_and_differ(tmp_path):
     assert all(
         40000 <= config.port_block(p) < 50000 and config.port_block(p) % 10 == 0 for p in (a, b)
     )
+
+
+def test_path_after_a_tag_stays_in_the_message():
+    post = board.parse(comment(1, "[Ana's Codex · ml/x] @drasolo ui/app.py crashes on load", "ana"))
+    assert post.tags == {("drasolo", None)}
+    assert post.message == "ui/app.py crashes on load"
+
+
+def test_agent_on_main_can_be_reached():
+    body = board.compose("Ana", "Codex", "ml/x", "pull please", ["drasolo/main"])
+    post = board.parse(comment(1, body, "ana"))
+    assert board.classify(post, me("main")) == "you"
+    assert post.message == "pull please"
+
+
+def test_read_marker_only_moves_forward_and_keeps_other_keys(fake):
+    board.record_smoke("SMOKE OK")
+    board.mark_read(10, "2026-11-05T10:10:00Z")
+    board.mark_read(5, "2026-11-05T10:05:00Z")  # a slower process finishing late
+    state = board.load_state()
+    assert (state["last_id"], state["since"]) == (10, "2026-11-05T10:10:00Z")
+    assert state["smoke"]["result"] == "SMOKE OK"
+    assert not list(board.state_path().parent.glob("*.tmp"))
+
+
+def test_wait_retries_when_gh_returns_garbage(fake, monkeypatch):
+    calls = {"n": 0}
+    real_gh = board._gh
+
+    def flaky(*args, stdin=None):
+        if args[:2] != ("api", "user") and "--method" not in args:
+            calls["n"] += 1
+            if calls["n"] == 1:
+                return "<html>proxy error</html>"
+        return real_gh(*args, stdin=stdin)
+
+    monkeypatch.setattr(board, "_gh", flaky)
+    monkeypatch.setattr(board.time, "sleep", lambda seconds: None)
+    board.save_state({"last_id": 0})
+    fake.comments = [comment(1, f"[Ana's Codex · ml/x] @drasolo {BRANCH}: ping", "ana")]
+    assert "ping" in board.wait(interval=0)
+    assert board.load_state()["last_id"] == 1
+
+
+def test_ui_port_alone_is_honoured(monkeypatch):
+    import dev
+
+    monkeypatch.delenv("EMDASH_PORT", raising=False)
+    monkeypatch.delenv("API_PORT", raising=False)
+    monkeypatch.setenv("UI_PORT", "8501")
+    monkeypatch.setattr(config, "UI_PORT", 8501)
+    assert dev.ports()[1] == 8501
+
+
+def test_fetch_reads_every_page_without_slurp(fake):
+    fake.comments = [comment(i, f"[Ana's Codex · ml/x] note {i}", "ana") for i in range(1, 251)]
+    assert [p.id for p in board.fetch(me())] == list(range(1, 251))

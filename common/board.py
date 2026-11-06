@@ -38,11 +38,15 @@ from common import config
 
 AGENTS = {"claude": "Claude", "codex": "Codex", "antigravity": "Antigravity"}
 FIRST_RUN_POSTS = 5
+PAGE = 100  # GitHub's largest page of issue comments
 OTHER_LINES = 10
 
 _PREFIX = re.compile(r"^\[(?P<who>[^\]]+?)\s+·\s+(?P<branch>[^\]\s]+)\]\s*")
 _LOGIN = re.compile(r"^@([A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)[:,]?$")
-_BRANCH = re.compile(r"^[\w.-]+/[\w./-]*[\w-][:,]?$")
+# A branch right after an @login, closed by ":" or "," the way compose() writes it. Without
+# the closing mark it's text ("@ana ui/app.py crashes") and the tag is for the person.
+# Branches need a slash (area/thing), except main and master.
+_BRANCH = re.compile(r"^(?:[\w.-]+/[\w./-]*[\w-]|main|master)[:,]$")
 _ANY_TAG = re.compile(r"(?<![\w@])@([A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)")
 _KIND = re.compile(r"^(claim|done)\s*:", re.IGNORECASE)
 
@@ -138,7 +142,35 @@ def load_state() -> dict:
 
 
 def save_state(state: dict) -> None:
-    state_path().write_text(json.dumps(state, indent=2), "utf-8")
+    """Write atomically, so a hook or `board wait` reading at the same moment gets the old
+    state or the new one, never a half-written file."""
+    path = state_path()
+    tmp = path.with_name(f"{path.name}.{os.getpid()}.tmp")
+    tmp.write_text(json.dumps(state, indent=2), "utf-8")
+    for attempt in range(10):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:  # Windows: another process has the file open for a moment
+            time.sleep(0.05 * (attempt + 1))
+    tmp.unlink(missing_ok=True)
+    raise BoardError(f"could not write {path}")
+
+
+def update_state(**changes: object) -> dict:
+    """Re-read, change only these keys, write back: keeps what others wrote meanwhile."""
+    state = load_state() | changes
+    save_state(state)
+    return state
+
+
+def mark_read(last_id: int, since: str | None) -> dict:
+    """Move this checkout's read marker forward, never back, keeping every other key."""
+    state = load_state()
+    state["last_id"] = max(state.get("last_id", 0), last_id)
+    state["since"] = max(state.get("since") or "", since or "") or None
+    save_state(state)
+    return state
 
 
 def me() -> Me:
@@ -147,7 +179,7 @@ def me() -> Me:
     login = state.get("login") if state.get("repo") == repo else None
     if not login:
         login = _gh("api", "user", "--jq", ".login").strip()
-        save_state(state | {"login": login, "repo": repo})
+        update_state(login=login, repo=repo)
     try:
         names = people((config.ROOT / "AGENTS.md").read_text("utf-8"))
     except OSError:
@@ -229,11 +261,10 @@ def parse(comment: dict) -> Post:
         text = body[match.end() :]
     post.text = text
     post.tags, post.everyone, used = _address(text)
-    # Tags anywhere else in the text reach the person, never a specific agent.
+    # Tags later in the text reach the person, never a specific agent. A later @all is only a
+    # mention ("will post to @all first"): just the address block reaches everyone.
     for login in _ANY_TAG.findall(" ".join(text.split()[used:])):
-        if login.lower() == "all":
-            post.everyone = True
-        else:
+        if login.lower() != "all":
             post.tags.add((login.lower(), None))
     return post
 
@@ -276,10 +307,24 @@ def open_claims(posts: list[Post]) -> list[Post]:
 # --- fetching ----------------------------------------------------------------------------------
 
 
+def _gh_json(*args: str, stdin: str | None = None, empty: str = "[]"):
+    out = _gh(*args, stdin=stdin)
+    try:
+        return json.loads(out or empty)
+    except ValueError as error:  # a proxy page, a cut-off response
+        raise BoardError(f"gh returned something that is not JSON: {out[:80]!r}") from error
+
+
 def fetch(me: Me, since: str | None = None) -> list[Post]:
-    path = f"{me.comments}?per_page=100" + (f"&since={since}" if since else "")
-    pages = json.loads(_gh("api", "--paginate", "--slurp", path) or "[]")
-    comments = [c for page in pages for c in (page if isinstance(page, list) else [page])]
+    """Comments updated at or after `since`, a page at a time. Not `gh api --paginate --slurp`:
+    --slurp needs gh 2.48+, and Ubuntu's apt ships 2.45, where every read failed silently."""
+    comments: list[dict] = []
+    for page in range(1, 1000):
+        path = f"{me.comments}?per_page={PAGE}&page={page}" + (f"&since={since}" if since else "")
+        batch = _gh_json("api", path)
+        comments += batch if isinstance(batch, list) else [batch]
+        if len(batch) < PAGE:
+            break
     return sorted((parse(c) for c in comments), key=lambda p: p.id)
 
 
@@ -291,7 +336,7 @@ def fetch_last(me: Me, n: int) -> list[Post]:
     pages = range(max(1, last_page - math.ceil(n / 100)), last_page + 1)
     comments = []
     for page in pages:
-        comments += json.loads(_gh("api", f"{me.comments}?per_page=100&page={page}") or "[]")
+        comments += _gh_json("api", f"{me.comments}?per_page=100&page={page}")
     return sorted((parse(c) for c in comments), key=lambda p: p.id)[-n:]
 
 
@@ -364,9 +409,7 @@ def unread(event: str = "prompt", agent: str | None = None) -> str:
     if first:
         new = new[-FIRST_RUN_POSTS:]
     if posts:
-        state["last_id"] = max(last_id, posts[-1].id)
-        state["since"] = max([state.get("since") or ""] + [p.updated for p in posts])
-    save_state(state)
+        mark_read(posts[-1].id, max(p.updated for p in posts))
 
     text = render(new, who)
     if event != "start":
@@ -390,17 +433,11 @@ def post(text: str, agent: str | None, to: list[str] | None = None) -> str:
     agent = _agent_name(agent)
     who = me()
     body = compose(who.name, agent, who.branch, text, to)
-    sent = json.loads(
-        _gh(
-            "api",
-            "--method",
-            "POST",
-            who.comments,
-            "--input",
-            "-",
-            stdin=json.dumps({"body": body}),
-        )
-    )
+    sent = _gh_json(
+        "api", "--method", "POST", who.comments, "--input", "-",
+        stdin=json.dumps({"body": body}),
+        empty="{}",
+    )  # fmt: skip
     return f"posted #{sent['id']}: {body}"
 
 
@@ -413,13 +450,13 @@ def _agent_name(agent: str | None) -> str:
 
 def record_smoke(result: str) -> None:
     """Called by `dev.py smoke`, so a done post can carry the result."""
-    state = load_state()
-    state["smoke"] = {
-        "result": result,
-        "at": datetime.now(UTC).isoformat(timespec="seconds"),
-        "head": _git("rev-parse", "HEAD"),
-    }
-    save_state(state)
+    update_state(
+        smoke={
+            "result": result,
+            "at": datetime.now(UTC).isoformat(timespec="seconds"),
+            "head": _git("rev-parse", "HEAD"),
+        }
+    )
 
 
 def smoke_note() -> str:
@@ -447,9 +484,9 @@ def wait(interval: float = 30) -> str:
             state = load_state()
             if "last_id" not in state:  # first look from this checkout: start from now
                 posts = fetch(who)
-                state["last_id"] = posts[-1].id if posts else 0
-                state["since"] = max((p.updated for p in posts), default=None)
-                save_state(state)
+                state = mark_read(
+                    posts[-1].id if posts else 0, max((p.updated for p in posts), default=None)
+                )
             cursor = cursor or state.get("since")
             posts = fetch(who, cursor)
             if posts:
@@ -459,9 +496,7 @@ def wait(interval: float = 30) -> str:
                     seen[p.id] = p
             fresh = [seen[i] for i in sorted(seen)]
             if any(classify(p, who) in {"you", "human"} for p in fresh):
-                state["last_id"] = fresh[-1].id
-                state["since"] = cursor
-                save_state(state)
+                mark_read(fresh[-1].id, cursor)
                 return render(fresh, who)
             delay = interval
         except BoardError:

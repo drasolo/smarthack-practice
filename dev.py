@@ -45,6 +45,10 @@ def start_ui(port: int, api_port: int) -> subprocess.Popen:
 
 def _free(port: int) -> bool:
     with socket.socket() as s:
+        if os.name != "nt":
+            # As uvicorn does: a port in TIME_WAIT from the last run or smoke is free. Not on
+            # Windows, where SO_REUSEADDR would let us bind a port that's really in use.
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
             s.bind(("127.0.0.1", port))
         except OSError:
@@ -57,7 +61,7 @@ def ports(offset: int = 0) -> tuple[int, int]:
 
     Explicit EMDASH_PORT or API_PORT/UI_PORT are used as they are.
     """
-    if os.getenv("EMDASH_PORT") or os.getenv("API_PORT"):
+    if os.getenv("EMDASH_PORT") or os.getenv("API_PORT") or os.getenv("UI_PORT"):
         return config.API_PORT + offset, config.UI_PORT + offset
     for i in range(20):
         base = config.PORT_BASE + offset + 10 * i

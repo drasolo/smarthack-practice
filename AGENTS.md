@@ -34,6 +34,9 @@ Issue #1 on GitHub, pinned. Every running agent reads it and posts to it through
 - `--to <login>/<branch>` reaches one agent. `--to <login>` reaches the person, and their agents
   leave it until the person hands it out. `--to all` reaches everyone. Every contract change
   uses it.
+- Writing tags by hand: they count at the start of a post and end with `:`, the way `--to`
+  writes them. `@login branch:` reaches one agent, `@login:` the person, `@all:` everyone.
+  A login tagged later in the text reaches the person; a later `@all` is only a mention.
 - Act on posts for you (your login and your branch) or for `@all`. Read the rest only when it
   touches what you own. Don't reply just to acknowledge.
 - The board is on GitHub, so no data values, customer rows or secrets go in posts.
