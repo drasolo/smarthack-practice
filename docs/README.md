@@ -29,7 +29,8 @@ Aceste lucruri au deja locul lor în repo, deci nu le copiem.
 | Subiect | Loc |
 | --- | --- |
 | Brief-ul curent, glosarul, schema datelor, contractul API, deciziile | `CONTEXT.md` |
-| Roluri, foldere, comenzi, reguli pentru agenți | `AGENTS.md` |
+| Roluri, comenzi, reguli pentru agenți | `AGENTS.md` |
+| Ce conține fiecare folder și procedura de lucru | `AGENTS/` |
 | Setup pe laptop și modul de lucru al echipei | `README.md` din rădăcină |
 | Structura pitch-ului, scenariul demo, întrebările juriului | `pitch/` |
 

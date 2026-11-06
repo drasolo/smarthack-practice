@@ -19,7 +19,8 @@ demo waits. Background on the event, PPC and our preparation is in `docs/`: star
 | backend | Dragoș | `@drasolo` | `api/`, `common/`, `dev.py`; merges into `main` |
 | data | | | `ml/`, `evals/`, `scripts/`, `data/sample/` |
 | ui | | | `ui/`, `pitch/` |
-| everyone | | | `contract/`, `CONTEXT.md`: post to `@all` before changing |
+| everyone | | | `contract/`, `CONTEXT.md`, `AGENTS/`: post to `@all` before changing |
+| anyone | | | `docs/`, and `tests/` for the code you change |
 
 Any agent can work for any person. Edit only your person's folders. If you need a change
 somewhere else, ask on the board and tag the owner.
@@ -67,15 +68,10 @@ Run from the repo root. `uv run` creates the environment on first use.
 - Read `data/sample/` and the schema in CONTEXT.md > Data.
 - Prompts get aggregates, never raw customer rows. `common/llm.py` masks PII and logs every call.
 
-## Working rules
+## How to work here
 
-- One task, one branch, one worktree. Name the branch `<area>/<thing>` and prefix commits by
-  area: `api:`, `ml:`, `ui:`, `eval:`, `docs:`.
-- Build against `contract/mocks/` until the real piece lands. A contract change updates
-  `contract/schema.py`, the mocks and CONTEXT.md > Contract in the same commit.
-- Before Dragoș merges a branch, a different agent from the one that wrote it reviews
-  `git diff main...<branch>`.
-- A decision gets one line in CONTEXT.md > Decisions, with the reason.
+- Before you start a task, read `AGENTS/workflow.md`: the steps from picking it to merge.
+- To find something or decide where new information goes, read `AGENTS/repo-map.md`.
 - Replies stay short: what changed, the smoke output, what's next.
 
 ## Skills
